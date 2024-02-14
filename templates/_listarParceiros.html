@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+
+{% block conteudo %}
+<!--
+<input type="button" value="Voltar" onClick="history.go(-1)">
+-->
+<h1 class="display-2">PARCEIROS</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Parceiro</th>
+        <th>Endereço</th>
+        <th>Estado</th>
+        <th>Contato</th>
+        <th>Responsável</th>
+        <th>Desconto</th>
+        <th>Data</th>
+        <th>Detalhes</th>
+    </tr>
+    {% for parceiro in parceiros %}
+    <tr>
+        <td>{{ parceiro[0] }}</td>
+        <td>{{ parceiro[1] }}</td>
+        <td>{{ parceiro[2] }}</td>
+        <td>{{ parceiro[3] }}</td>
+        <td>{{ parceiro[4] }}</td>
+        <td>{{ parceiro[5] }}</td>
+        <td>{{ parceiro[6] }}</td>
+        <td>{{ parceiro[7] }}</td>
+        <td>{{ parceiro[8] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock conteudo %}

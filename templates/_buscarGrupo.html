@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+
+{% block conteudo %}
+<!--
+<input type="button" value="Voltar" onClick="history.go(-1)">
+-->
+<h1 class="display-2">RESULTADOS</h1>
+
+{% if resultados %}
+<table>
+    <tr>
+        <th>ID Grupo</th>
+        <th>Grupo</th>
+        <th>Endereço</th>
+        <th>UF</th>
+        <th>Contato</th>
+        <th>Responsável</th>
+        <th>Data</th>
+        <th>Detalhes</th>
+        <th>Ação</th>
+    </tr>
+    {% for resultado in resultados %}
+    <tr>
+        <td>{{ resultado[0] }}</td>
+        <td>{{ resultado[1] }}</td>
+        <td>{{ resultado[2] }}</td>
+        <td>{{ resultado[3] }}</td>
+        <td>{{ resultado[4] }}</td>
+        <td>{{ resultado[5] }}</td>
+        <td>{{ resultado[6] }}</td>
+        <td>{{ resultado[7] }}</td>
+        <td>
+            <form action="{{ url_for('editar_grupo', grupo=resultado[0]) }}" method="get">
+                <button class="editar-btn" type="submit">Editar</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Nenhum resultado encontrado.</p>
+{% endif %}
+
+{% endblock conteudo %}

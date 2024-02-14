@@ -1,0 +1,33 @@
+{% extends '_base.html' %}
+
+{% block conteudo %}
+<!--
+    <input type="button" value="Voltar" onClick="history.go(-1)">
+    -->
+<h1 class="display-2">GRUPOS</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Grupo</th>
+        <th>Endereço</th>
+        <th>Estado</th>
+        <th>Contato</th>
+        <th>Responsável</th>
+        <th>Data</th>
+        <th>Detalhes</th>
+    </tr>
+    {% for grupo in grupos %}
+    <tr>
+        <td>{{ grupo[0] }}</td>
+        <td>{{ grupo[1] }}</td>
+        <td>{{ grupo[2] }}</td>
+        <td>{{ grupo[3] }}</td>
+        <td>{{ grupo[4] }}</td>
+        <td>{{ grupo[5] }}</td>
+        <td>{{ grupo[6] }}</td>
+        <td>{{ grupo[7] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock conteudo %}

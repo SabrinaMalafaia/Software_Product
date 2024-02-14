@@ -1,0 +1,70 @@
+{% extends '_base.html' %}
+
+{% block conteudo %}
+<!--
+<input type="button" value="Voltar" onClick="history.go(-1)">
+-->
+<h1 class="display-2">CADASTRO DE GRUPO</h1>
+<form action="inserir_grupo" method="POST">
+    <label for="grupo">Grupo:</label>
+    <input type="text" id="grupo" name="grupo"><br>
+    <br>
+
+    <label for="endereco">Endereço:</label>
+    <input type="text" id="endereco" name="endereco"><br>
+    <br>
+
+    <label for="se-estado">Estado:</label>
+    <select name="estado" id="se-estado">
+        <option selected disabled>escolha um estado</option>
+        <option value="AC">Acre</option>
+        <option value="AL">Alagoas</option>
+        <option value="AP">Amapá</option>
+        <option value="AM">Amazonas</option>
+        <option value="BA">Bahia</option>
+        <option value="CE">Ceará</option>
+        <option value="DF">Distrito Federal</option>
+        <option value="ES">Espírito Santo</option>
+        <option value="GO">Goiás</option>
+        <option value="MA">Maranhão</option>
+        <option value="MT">Mato Grosso</option>
+        <option value="MS">Mato Grosso do Sul</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="PA">Pará</option>
+        <option value="PB">Paraíba</option>
+        <option value="PR">Paraná</option>
+        <option value="PE">Pernambuco</option>
+        <option value="PI">Piauí</option>
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="RN">Rio Grande do Norte</option>
+        <option value="RS">Rio Grande do Sul</option>
+        <option value="RO">Rondônia</option>
+        <option value="RR">Roraima</option>
+        <option value="SC">Santa Catarina</option>
+        <option value="SP">São Paulo</option>
+        <option value="SE">Sergipe</option>
+        <option value="TO">Tocantins</option>
+    </select>
+    <br><br>
+
+    <label for="contato">Contato:</label>
+    <input type="text" id="contato" name="contato"><br>
+    <br>
+
+    <label for="responsavel">Responsável:</label>
+    <input type="text" id="responsavel" name="responsavel"><br>
+    <br>
+
+    <label for="data">Data:</label>
+    <input type="date" id="data" name="data"><br>
+    <br>
+
+    <label for="ta-detalhes">Detalhes:</label><br>
+    <textarea name="detalhes" id="ta-detalhes" rows="5" cols="50"></textarea>
+    <br>
+
+    <button type="submit">Cadastrar</button>
+    <button type="reset">Limpar</button>
+</form>
+
+{% endblock conteudo %}
