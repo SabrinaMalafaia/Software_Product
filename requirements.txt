@@ -1,0 +1,11 @@
+*** Docker ***
+https://hub.docker.com/
+
+https://hub.docker.com/_/nginx -- versão: 1.24.0-alpine
+https://hub.docker.com/_/python -- versão: 3.11-alpine
+https://hub.docker.com/_/mysql -- versão: 8.0.34
+
+*** Python ***
+pip install flask
+pip install requests
+pip install mysql-connector-python
