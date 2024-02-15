@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% block conteudo %}
+<!--
+<input type="button" value="Voltar" onClick="history.go(-1)">
+-->
+<h1 class="display-2">ACESSO AO SISTEMA</h1>
+
+<form action="#" method="GET">
+    <div class="form-group">
+        <label for="login">Login</label>
+        <input type="email" class="form-control" id="login" placeholder="Seu email" required>
+    </div><br>
+
+    <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" class="form-control" id="senha" placeholder="Senha" required>
+    </div><br>
+
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
+
+{% endblock conteudo %}
