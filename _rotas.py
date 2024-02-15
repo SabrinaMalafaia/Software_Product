@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from _banco import Conexao
+from _dados import Conexao
 import _grupo
 import _parceiro
 import requests

@@ -15,7 +15,7 @@ function buscarCep() {
 }
 
 function preencherFormulario(data) {
-    document.getElementById('logradouro').value = data.logradouro;
+    document.getElementById('endereco').value = data.logradouro;
     document.getElementById('bairro').value = data.bairro;
     document.getElementById('cidade').value = data.localidade;
     document.getElementById('estado').value = data.uf;
