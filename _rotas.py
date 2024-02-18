@@ -18,6 +18,11 @@ def home():
     return render_template("_index.html")
 
 
+@app.route('/sobre', methods=['GET'])
+def sobre():
+    return render_template("_sobre.html")
+
+
 @app.route('/objetivo', methods=['GET'])
 def objetivo():
     return render_template("_objetivo.html")
@@ -84,7 +89,7 @@ def buscar_cep():
 
 # LOGIN ##############
 
-@app.route('/entrar', methods=['GET'])  # Rota que exibe a tela de Login
+@app.route('/login', methods=['GET'])  # Rota que exibe a tela de Login
 def entrar():
     return render_template('_login.html')
 

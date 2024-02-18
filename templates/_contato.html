@@ -6,4 +6,29 @@
     entre em contato.
 </p>
 
+<form action="#" method="POST">
+    <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" class="form-control" id="nome" name="nome">
+    </div>
+
+    <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" class="form-control" id="email" name="email">
+    </div>
+
+    <div class="form-group">
+        <label for="telefone">Telefone:</label>
+        <input type="tel" class="form-control" id="telefone" name="telefone">
+    </div>
+
+    <div class="form-group">
+        <label for="ta-mensagem">Mensagem:</label>
+        <textarea name="mensagem" class="form-control" id="ta-mensagem" rows="5" cols="50"></textarea>
+    </div><br>
+
+    <button type="submit" class="btn btn-success">Enviar</button>
+    <button type="reset" class="btn btn-secondary">Limpar</button>
+</form>
+
 {% endblock conteudo %}
