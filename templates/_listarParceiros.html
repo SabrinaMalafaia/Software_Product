@@ -9,13 +9,18 @@
     <tr>
         <th>ID</th>
         <th>Parceiro</th>
+        <th>CEP</th>
         <th>Endereço</th>
+        <th>Complemento</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
         <th>Estado</th>
         <th>Contato</th>
         <th>Responsável</th>
         <th>Desconto</th>
-        <th>Data</th>
         <th>Detalhes</th>
+        <th>Data</th>
+        <th>Status</th>
     </tr>
     {% for parceiro in parceiros %}
     <tr>
@@ -28,6 +33,11 @@
         <td>{{ parceiro[6] }}</td>
         <td>{{ parceiro[7] }}</td>
         <td>{{ parceiro[8] }}</td>
+        <td>{{ parceiro[9] }}</td>
+        <td>{{ parceiro[10] }}</td>
+        <td>{{ parceiro[11] }}</td>
+        <td>{{ parceiro[12] }}</td>
+        <td>{{ parceiro[13] }}</td>
     </tr>
     {% endfor %}
 </table>

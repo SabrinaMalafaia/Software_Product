@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # BASE DE DADOS ##############
 db = Conexao(host="localhost", port="3307", user="root",
-             password="root", database="AlemPedal")
+             password="root", database="V2")
 
 
 # ROTAS ##############
@@ -40,13 +40,17 @@ def buscar_parceiro():
     return render_template("_buscarParceiro.html")
 
 
-@app.route('/listar_parceiro', methods=['GET'])
+@app.route('/listar_parceiro', methods=['GET'])  # OK
 def listar_parceiro():
-    return render_template("_listarParceiros.html")
+    resultado = _parceiro.listar_parceiro()
+    return render_template("_listarParceiros.html", parceiros=resultado)
 
 
-@app.route('/cadastrar_parceiro', methods=['GET'])
+@app.route('/cadastrar_parceiro', methods=['GET', 'POST'])  # OK
 def cadastrar_parceiro():
+    if request.method == 'POST':
+        resposta = _parceiro.adicionar_parceiro()
+        return render_template("_index.html", re=resposta)
     return render_template("_cadastrarParceiro.html")
 
 
@@ -62,13 +66,17 @@ def buscar_grupo():
     return render_template("_buscarGrupo.html")
 
 
-@app.route('/listar_grupo', methods=['GET'])
+@app.route('/listar_grupo', methods=['GET'])  # OK
 def listar_grupo():
-    return render_template("_listarGrupos.html")
+    resultado = _grupo.listar_grupo()
+    return render_template('_listarGrupos.html', grupos=resultado)
 
 
-@app.route('/cadastrar_grupo', methods=['GET', 'POST'])
+@app.route('/cadastrar_grupo', methods=['GET', 'POST'])  # OK
 def cadastrar_grupo():
+    if request.method == 'POST':
+        resposta = _grupo.adicionar_grupo()
+        return render_template("_index.html")
     return render_template("_cadastrarGrupo.html")
 
 

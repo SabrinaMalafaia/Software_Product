@@ -2,8 +2,8 @@
 {% block conteudo %}
 <h1 class="display-2">CONTATO</h1>
 <p>
-    Quer mais informações, quer financiar o Além do Pedal ou deseja ser um novo parceiro e esta com duvidas. Por favor
-    entre em contato.
+    Quer mais informações, quer financiar o Além do Pedal ou deseja ser um novo parceiro e esta com duvidas.<br>
+    Por favor entre em contato.
 </p>
 
 <form action="#" method="POST">
@@ -20,6 +20,17 @@
     <div class="form-group">
         <label for="telefone">Telefone:</label>
         <input type="tel" class="form-control" id="telefone" name="telefone">
+    </div>
+
+    <div class="form-group">
+        <label class="form-group" for="se-assunto">Assunto:</label>
+        <select class="custom-select" name="assunto" id="se-assunto">
+            <option selected disabled>Escolha o assunto</option>
+            <option value="Financiar">Financiar</option>
+            <option value="Grupo">Grupo</option>
+            <option value="Parceria">Parceria</option>
+            <option value="Outros">Outros</option>
+        </select>
     </div>
 
     <div class="form-group">
