@@ -12,19 +12,19 @@ db = Conexao(host="localhost", port="3307", user="root",
 
 
 # INDEX ##############
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])   # OK
 def home():
     return render_template("_index.html")
 
 
 # SOBRE ##############
-@app.route('/sobre', methods=['GET'])
+@app.route('/sobre', methods=['GET'])   # OK
 def sobre():
     return render_template("_sobre.html")
 
 
 # OBJETIVO ##############
-@app.route('/objetivo', methods=['GET'])
+@app.route('/objetivo', methods=['GET'])   # OK
 def objetivo():
     return render_template("_objetivo.html")
 
@@ -35,12 +35,12 @@ def parceiro():
     return render_template("_parceiro.html")
 
 
-@app.route('/buscar_parceiro', methods=['GET'])
+@app.route('/buscar_parceiro', methods=['GET'])  # OK
 def buscar_parceiro():
     return render_template("_buscarParceiro.html")
 
 
-@app.route('/resultado_parceiro', methods=['GET'])
+@app.route('/resultado_parceiro', methods=['GET'])  # OK
 def resultado_parceiro():
     parceiro = request.args.get('parceiro')
     resultado = _parceiro.buscar_parceiro(parceiro)
@@ -67,12 +67,12 @@ def grupo():
     return render_template("_grupo.html")
 
 
-@app.route('/buscar_grupo', methods=['GET'])
+@app.route('/buscar_grupo', methods=['GET'])  # OK
 def buscar_grupo():
     return render_template("_buscarGrupo.html")
 
 
-@app.route('/resultado_grupo', methods=['GET'])
+@app.route('/resultado_grupo', methods=['GET'])  # OK
 def resultado_grupo():
     grupo = request.args.get('grupo')
     resultado = _grupo.buscar_grupo(grupo)

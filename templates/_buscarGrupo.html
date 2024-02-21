@@ -18,12 +18,17 @@
 <table>
     <tr>
         <th>Grupo</th>
+        <th>CEP</th>
         <th>Endereço</th>
-        <th>UF</th>
+        <th>Complemento</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Estado</th>
         <th>Contato</th>
         <th>Responsável</th>
-        <th>Data</th>
         <th>Detalhes</th>
+        <th>Data</th>
+        <th>Status</th>
         <th>Ação</th>
     </tr>
     {% for result in resultado %}
@@ -35,6 +40,11 @@
         <td>{{ result[5] }}</td>
         <td>{{ result[6] }}</td>
         <td>{{ result[7] }}</td>
+        <td>{{ result[8] }}</td>
+        <td>{{ result[9] }}</td>
+        <td>{{ result[10] }}</td>
+        <td>{{ result[11] }}</td>
+        <td>{{ result[12] }}</td>
         <td>
             <form action="#" method="get">
                 <button class="editar-btn" type="submit">Editar</button>
