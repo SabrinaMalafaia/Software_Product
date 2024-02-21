@@ -4,12 +4,19 @@
 <!--
 <input type="button" value="Voltar" onClick="history.go(-1)">
 -->
-<h1 class="display-2">RESULTADOS</h1>
+<br>
+<form action="{{ url_for('resultado_grupo') }}" method="GET">
+    <label for="grupo">Grupo:</label>
+    <input type="text" name="grupo" required>
+    <input type="submit" value="Buscar">
+</form>
 
-{% if resultados %}
+{% block content %}
+<h1 class="display-2">RESULTADO</h1>
+
+{% if resultado %}
 <table>
     <tr>
-        <th>ID Grupo</th>
         <th>Grupo</th>
         <th>Endereço</th>
         <th>UF</th>
@@ -19,18 +26,17 @@
         <th>Detalhes</th>
         <th>Ação</th>
     </tr>
-    {% for resultado in resultados %}
+    {% for result in resultado %}
     <tr>
-        <td>{{ resultado[0] }}</td>
-        <td>{{ resultado[1] }}</td>
-        <td>{{ resultado[2] }}</td>
-        <td>{{ resultado[3] }}</td>
-        <td>{{ resultado[4] }}</td>
-        <td>{{ resultado[5] }}</td>
-        <td>{{ resultado[6] }}</td>
-        <td>{{ resultado[7] }}</td>
+        <td>{{ result[1] }}</td>
+        <td>{{ result[2] }}</td>
+        <td>{{ result[3] }}</td>
+        <td>{{ result[4] }}</td>
+        <td>{{ result[5] }}</td>
+        <td>{{ result[6] }}</td>
+        <td>{{ result[7] }}</td>
         <td>
-            <form action="{{ url_for('editar_grupo', grupo=resultado[0]) }}" method="get">
+            <form action="#" method="get">
                 <button class="editar-btn" type="submit">Editar</button>
             </form>
         </td>
@@ -40,5 +46,6 @@
 {% else %}
 <p>Nenhum resultado encontrado.</p>
 {% endif %}
+{% endblock %}
 
 {% endblock conteudo %}

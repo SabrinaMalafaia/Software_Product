@@ -9,8 +9,20 @@ class Parceiro():
     pass
 
 
-def buscar_parceiro():
-    pass
+def buscar_parceiro(parceiro):
+    db.conectar()
+    try:
+        query = "SELECT * FROM parceiros WHERE parceiro LIKE %s"
+        values = ('%' + parceiro + '%',)
+        resultado = db.executar(query, values)
+        return resultado
+
+    except Exception as e:
+        return f"Erro: {str(e)}"
+
+    finally:
+        if db.conexao is not None:
+            db.desconectar()
 
 
 def listar_parceiro():
@@ -45,6 +57,9 @@ def adicionar_parceiro():
             status = request.form['status']
             data = request.form['data']
             detalhes = request.form['detalhes']
+
+            if complemento == "":
+                complemento = None
 
             query = "INSERT INTO parceiros (parceiro, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, desconto, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             values = (parceiro, cep, endereco, complemento, bairro, cidade,

@@ -9,8 +9,20 @@ class Grupo():
     pass
 
 
-def buscar_grupo():
-    pass
+def buscar_grupo(grupo):
+    db.conectar()
+    try:
+        query = "SELECT * FROM grupos WHERE grupo LIKE %s"
+        values = ('%' + grupo + '%',)
+        resultado = db.executar(query, values)
+        return resultado
+
+    except Exception as e:
+        return f"Erro: {str(e)}"
+
+    finally:
+        if db.conexao is not None:
+            db.desconectar()
 
 
 def listar_grupo():
@@ -44,6 +56,9 @@ def adicionar_grupo():
             status = request.form['status']
             data = request.form['data']
             detalhes = request.form['detalhes']
+
+            if complemento == "":
+                complemento = None
 
             query = "INSERT INTO grupos (grupo, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             values = (grupo, cep, endereco, complemento, bairro, cidade,

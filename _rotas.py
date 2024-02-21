@@ -6,31 +6,31 @@ import requests
 
 app = Flask(__name__)
 
-# BASE DE DADOS ##############
+# DEPÓSITO DE DADOS ##############
 db = Conexao(host="localhost", port="3307", user="root",
              password="root", database="V2")
 
 
-# ROTAS ##############
-
+# INDEX ##############
 @app.route('/', methods=['GET'])
 def home():
     return render_template("_index.html")
 
 
+# SOBRE ##############
 @app.route('/sobre', methods=['GET'])
 def sobre():
     return render_template("_sobre.html")
 
 
+# OBJETIVO ##############
 @app.route('/objetivo', methods=['GET'])
 def objetivo():
     return render_template("_objetivo.html")
 
 
 # PARCEIROS ##############
-
-@app.route('/parceiro', methods=['GET'])
+@app.route('/parceiro', methods=['GET'])  # OK
 def parceiro():
     return render_template("_parceiro.html")
 
@@ -38,6 +38,13 @@ def parceiro():
 @app.route('/buscar_parceiro', methods=['GET'])
 def buscar_parceiro():
     return render_template("_buscarParceiro.html")
+
+
+@app.route('/resultado_parceiro', methods=['GET'])
+def resultado_parceiro():
+    parceiro = request.args.get('parceiro')
+    resultado = _parceiro.buscar_parceiro(parceiro)
+    return render_template('_buscarParceiro.html', resultado=resultado)
 
 
 @app.route('/listar_parceiro', methods=['GET'])  # OK
@@ -55,8 +62,7 @@ def cadastrar_parceiro():
 
 
 # GRUPOS ##############
-
-@app.route('/grupo', methods=['GET'])
+@app.route('/grupo', methods=['GET'])  # OK
 def grupo():
     return render_template("_grupo.html")
 
@@ -64,6 +70,13 @@ def grupo():
 @app.route('/buscar_grupo', methods=['GET'])
 def buscar_grupo():
     return render_template("_buscarGrupo.html")
+
+
+@app.route('/resultado_grupo', methods=['GET'])
+def resultado_grupo():
+    grupo = request.args.get('grupo')
+    resultado = _grupo.buscar_grupo(grupo)
+    return render_template('_buscarGrupo.html', resultado=resultado)
 
 
 @app.route('/listar_grupo', methods=['GET'])  # OK
@@ -80,6 +93,7 @@ def cadastrar_grupo():
     return render_template("_cadastrarGrupo.html")
 
 
+# CONTATO ##############
 @app.route('/contato', methods=['GET'])
 def contato():
     return render_template("_contato.html")
@@ -96,12 +110,12 @@ def buscar_cep():
 
 
 # LOGIN ##############
-
 @app.route('/login', methods=['GET'])  # Rota que exibe a tela de Login
 def entrar():
     return render_template('_login.html')
 
 
+# RUN ##############
 if __name__ == '__main__':
     app.run(debug=True)
 
