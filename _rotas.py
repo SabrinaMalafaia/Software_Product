@@ -61,6 +61,11 @@ def cadastrar_parceiro():
     return render_template("_cadastrarParceiro.html")
 
 
+@app.route('/editar_parceiro/<id>', methods=['GET', 'POST'])
+def editar_parceiro(id):
+    pass
+
+
 # GRUPOS ##############
 @app.route('/grupo', methods=['GET'])  # OK
 def grupo():
@@ -113,6 +118,12 @@ def buscar_cep():
 @app.route('/login', methods=['GET'])  # Rota que exibe a tela de Login
 def entrar():
     return render_template('_login.html')
+
+
+# ERRO ##############
+@app.errorhandler(404)
+def erro404(e):  # Erro
+    return render_template('_erro.html'), 404
 
 
 # RUN ##############

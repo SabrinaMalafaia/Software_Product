@@ -77,3 +77,7 @@ def adicionar_parceiro():
     finally:
         if db.conexao is not None:
             db.desconectar()
+
+
+def atualizar_parceiro():
+    pass
