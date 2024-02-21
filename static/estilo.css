@@ -68,3 +68,11 @@ th {
     border-radius: 4px;
     cursor: pointer;
 }
+
+.erro {
+    font-family: Roboto;
+    font-size: 45px;
+    text-align: center;
+    font-weight: normal;
+    color: 100, 100, 100;
+}
