@@ -35,7 +35,13 @@
         <td>{{ parceiro[10] }}</td>
         <td>{{ parceiro[11] }}</td>
         <td>{{ parceiro[12] }}</td>
-        <td>{{ parceiro[13] }}</td>
+        <td>
+            {% if parceiro[13] == '1' %}
+            Ativo
+            {% else %}
+            Inativo
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 </table>

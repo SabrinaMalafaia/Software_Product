@@ -33,7 +33,14 @@
         <td>{{ grupo[9] }}</td>
         <td>{{ grupo[10] }}</td>
         <td>{{ grupo[11] }}</td>
-        <td>{{ grupo[12] }}</td>
+        <td>
+            {% if grupo[12] == '1' %}
+            Ativo
+            {% else %}
+            Inativo
+            {% endif %}
+        </td>
+
     </tr>
     {% endfor %}
 </table>

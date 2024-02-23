@@ -41,7 +41,13 @@
         <td>{{ item[9] }}</td>
         <td>{{ item[10] }}</td>
         <td>{{ item[11] }}</td>
-        <td>{{ item[12] }}</td>
+        <td>
+            {% if item[12] == '1' %}
+            Ativo
+            {% else %}
+            Inativo
+            {% endif %}
+        </td>
         <td>
             <a href='{{ url_for("editar_grupo", id=item[0]) }}' class="btn btn-secondary">
                 <i class="bi bi-arrow-clockwise"> </i>Editar</a>
