@@ -3,4 +3,4 @@ templates/teste.html
 venv
 docker
 teste.py
-_editarParceiro.html
+.vscode

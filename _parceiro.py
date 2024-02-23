@@ -9,6 +9,22 @@ class Parceiro:
     pass
 
 
+def buscar_parceiro_id(id):
+    db.conectar()
+    try:
+        query = "SELECT * FROM parceiros WHERE id_parceiro = %s"
+        values = (id,)
+        resultado = db.executar(query, values)
+        return resultado
+
+    except Exception as e:
+        return f"Erro: {str(e)}"
+
+    finally:
+        if db.conexao is not None:
+            db.desconectar()
+
+
 def buscar_parceiro(parceiro):
     db.conectar()
     try:
@@ -58,26 +74,62 @@ def adicionar_parceiro():
             data = request.form['data']
             detalhes = request.form['detalhes']
 
-            if complemento == "":
+            if not complemento:
                 complemento = None
 
             query = "INSERT INTO parceiros (parceiro, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, desconto, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
             values = (parceiro, cep, endereco, complemento, bairro, cidade,
                       estado, contato, responsavel, desconto, detalhes, data, status)
 
             db.executar(query, values)
 
             return "Dados inseridos com sucesso!"
-        else:
-            return "Método Inválido!"
 
     except Exception as e:
-        return f"Erro: {str(e)}"
+        return f"Erro ao adicionar parceiro: {str(e)}"
 
     finally:
         if db.conexao is not None:
             db.desconectar()
 
 
-def atualizar_parceiro():
-    pass
+def atualizar_parceiro(id, dados):
+    try:
+        db.conectar()
+        parceiro = dados['parceiro']
+        cep = dados['cep']
+        endereco = dados['endereco']
+        complemento = dados['complemento']
+        bairro = dados['bairro']
+        cidade = dados['cidade']
+        estado = dados['estado']
+        contato = dados['contato']
+        responsavel = dados['responsavel']
+        desconto = dados['desconto']
+        status = dados['status']
+        data = dados['data']
+        detalhes = dados['detalhes']
+
+        if not complemento:
+            complemento = None
+
+        query = """
+        UPDATE parceiros
+        SET parceiro=%s, cep=%s, endereco=%s, complemento=%s, bairro=%s, cidade=%s, estado=%s, contato=%s, responsavel=%s, desconto=%s, detalhes=%s, data=%s, status=%s
+        WHERE id_parceiro = %s
+        """
+
+        values = (parceiro, cep, endereco, complemento, bairro, cidade,
+                  estado, contato, responsavel, desconto, detalhes, data, status, id)
+
+        db.executar(query, values)
+
+        return "Parceiro atualizado com sucesso!"
+
+    except Exception as e:
+        return f"Erro ao atualizar parceiro: {str(e)}"
+
+    finally:
+        if db.conexao is not None:
+            db.desconectar()

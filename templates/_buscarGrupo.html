@@ -1,9 +1,7 @@
 {% extends '_base.html' %}
 
 {% block conteudo %}
-<!--
-<input type="button" value="Voltar" onClick="history.go(-1)">
--->
+
 <br>
 <form action="{{ url_for('resultado_grupo') }}" method="GET">
     <label for="grupo">Grupo:</label>
@@ -14,7 +12,6 @@
 {% block content %}
 <h1 class="display-2">RESULTADO</h1>
 
-{% if resultado %}
 <table>
     <tr>
         <th>Grupo</th>
@@ -31,31 +28,28 @@
         <th>Status</th>
         <th>Ação</th>
     </tr>
-    {% for result in resultado %}
+    {% for item in resultado %}
     <tr>
-        <td>{{ result[1] }}</td>
-        <td>{{ result[2] }}</td>
-        <td>{{ result[3] }}</td>
-        <td>{{ result[4] }}</td>
-        <td>{{ result[5] }}</td>
-        <td>{{ result[6] }}</td>
-        <td>{{ result[7] }}</td>
-        <td>{{ result[8] }}</td>
-        <td>{{ result[9] }}</td>
-        <td>{{ result[10] }}</td>
-        <td>{{ result[11] }}</td>
-        <td>{{ result[12] }}</td>
+        <td>{{ item[1] }}</td>
+        <td>{{ item[2] }}</td>
+        <td>{{ item[3] }}</td>
+        <td>{{ item[4] }}</td>
+        <td>{{ item[5] }}</td>
+        <td>{{ item[6] }}</td>
+        <td>{{ item[7] }}</td>
+        <td>{{ item[8] }}</td>
+        <td>{{ item[9] }}</td>
+        <td>{{ item[10] }}</td>
+        <td>{{ item[11] }}</td>
+        <td>{{ item[12] }}</td>
         <td>
-            <form action="#" method="get">
-                <button class="editar-btn" type="submit">Editar</button>
-            </form>
+            <a href='{{ url_for("editar_grupo", id=item[0]) }}' class="btn btn-secondary">
+                <i class="bi bi-arrow-clockwise"> </i>Editar</a>
         </td>
     </tr>
     {% endfor %}
 </table>
-{% else %}
-<p>Nenhum resultado encontrado.</p>
-{% endif %}
+
 {% endblock %}
 
 {% endblock conteudo %}

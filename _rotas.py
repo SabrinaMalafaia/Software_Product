@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from _dados import Conexao
 import _grupo
 import _parceiro
@@ -63,7 +63,30 @@ def cadastrar_parceiro():
 
 @app.route('/editar_parceiro/<id>', methods=['GET', 'POST'])
 def editar_parceiro(id):
-    pass
+    parceiro = _parceiro.buscar_parceiro_id(id)
+
+    if request.method == 'POST':
+        dados = {
+            'parceiro': request.form['parceiro'],
+            'cep': request.form['cep'],
+            'endereco': request.form['endereco'],
+            'complemento': request.form['complemento'],
+            'bairro': request.form['bairro'],
+            'cidade': request.form['cidade'],
+            'estado': request.form['estado'],
+            'contato': request.form['contato'],
+            'responsavel': request.form['responsavel'],
+            'desconto': request.form['desconto'],
+            'status': request.form['status'],
+            'data': request.form['data'],
+            'detalhes': request.form['detalhes']
+        }
+
+        _parceiro.atualizar_parceiro(id, dados)
+
+        return redirect('/')
+
+    return render_template('_editarParceiro.html', parceiro=parceiro)
 
 
 # GRUPOS ##############
@@ -96,6 +119,33 @@ def cadastrar_grupo():
         resposta = _grupo.adicionar_grupo()
         return render_template("_index.html")
     return render_template("_cadastrarGrupo.html")
+
+
+@app.route('/editar_grupo/<id>', methods=['GET', 'POST'])
+def editar_grupo(id):
+    grupo = _grupo.buscar_grupo_id(id)
+
+    if request.method == 'POST':
+        dados = {
+            'grupo': request.form['grupo'],
+            'cep': request.form['cep'],
+            'endereco': request.form['endereco'],
+            'complemento': request.form['complemento'],
+            'bairro': request.form['bairro'],
+            'cidade': request.form['cidade'],
+            'estado': request.form['estado'],
+            'contato': request.form['contato'],
+            'responsavel': request.form['responsavel'],
+            'status': request.form['status'],
+            'data': request.form['data'],
+            'detalhes': request.form['detalhes']
+        }
+
+        _grupo.atualizar_grupo(id, dados)
+
+        return redirect('/')
+
+    return render_template('_editargrupo.html', grupo=grupo)
 
 
 # CONTATO ##############
