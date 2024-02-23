@@ -44,7 +44,7 @@ def buscar_parceiro(parceiro):
 def listar_parceiro():
     db.conectar()
     try:
-        query = "SELECT * FROM parceiros"
+        query = "SELECT * FROM parceiros WHERE status = '1'"
         resultado = db.executar(query)
         return resultado
 

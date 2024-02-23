@@ -19,7 +19,6 @@
         <th>Desconto</th>
         <th>Detalhes</th>
         <th>Data</th>
-        <th>Status</th>
     </tr>
     {% for parceiro in parceiros %}
     <tr>
@@ -35,13 +34,6 @@
         <td>{{ parceiro[10] }}</td>
         <td>{{ parceiro[11] }}</td>
         <td>{{ parceiro[12] }}</td>
-        <td>
-            {% if parceiro[13] == '1' %}
-            Ativo
-            {% else %}
-            Inativo
-            {% endif %}
-        </td>
     </tr>
     {% endfor %}
 </table>

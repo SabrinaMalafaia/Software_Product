@@ -44,7 +44,7 @@ def buscar_grupo(grupo):
 def listar_grupo():
     db.conectar()
     try:
-        query = "SELECT * FROM grupos"
+        query = "SELECT * FROM grupos WHERE status = '1'"
         resultado = db.executar(query)
         return resultado
 
