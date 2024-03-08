@@ -1,22 +1,21 @@
 version: "2.24.5"
 services:
  web:
-  build: .
+  build:
+    dockerfile: dockerfile.python
   working_dir: /data
   command: python _rotas.py
-  restart: always
   links:
     - db
   volumes:
     - .:/data
   ports:
     - "5050:5050"
-
- db:
-  image: mysql:8.0.34
   restart: always
-  environment:
-    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    MYSQL_DATABASE: ${MYSQL_DATABASE}
+  
+ db:
+  build:
+    dockerfile: dockerfile.mysql
   ports:
     - "3306:3306"
+  restart: always
