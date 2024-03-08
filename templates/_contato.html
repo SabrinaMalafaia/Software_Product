@@ -6,7 +6,7 @@
     Por favor entre em contato.
 </p>
 
-<form action="#" method="POST">
+<form action="contato" method="POST">
     <div class="form-group">
         <label for="nome">Nome:</label>
         <input type="text" class="form-control" id="nome" name="nome">
@@ -38,8 +38,11 @@
         <textarea name="mensagem" class="form-control" id="ta-mensagem" rows="5" cols="50"></textarea>
     </div><br>
 
-    <button type="submit" class="btn btn-success">Enviar</button>
-    <button type="reset" class="btn btn-secondary">Limpar</button>
+    <button type="submit" class="btn btn-warning">Enviar</button>
+    <button type=" reset" class="btn btn-secondary">Limpar</button>
 </form>
 
+<a href="https://api.whatsapp.com/send?phone=5511947255628" target="_blank" class="whatsapp-icon">
+    <img src="{{url_for('static',filename='img/whatsapp64.png')}}" alt="WhatsApp">
+</a>
 {% endblock conteudo %}

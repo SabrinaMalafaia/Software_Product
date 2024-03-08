@@ -1,10 +1,24 @@
 from flask import Flask, render_template, request, jsonify, redirect
+from flask_mail import Mail, Message
 from _dados import Conexao
+import _contato
 import _grupo
 import _parceiro
 import requests
 
 app = Flask(__name__)
+
+# Configurações do Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP server
+app.config['MAIL_PORT'] = 587  # Porta SMTP
+app.config['MAIL_USE_TLS'] = True  # TLS para segurança
+# cleoalves.p.e@gmail.com
+app.config['MAIL_USERNAME'] = 'rpa.malafaia@gmail.com'
+app.config['MAIL_PASSWORD'] = 'kxsw zyza mmjy atsm'
+# contato@alemdopedal.com
+app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
+
+mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
 db = Conexao(host="localhost", port="3307", user="root",
@@ -149,8 +163,11 @@ def editar_grupo(id):
 
 
 # CONTATO ##############
-@app.route('/contato', methods=['GET'])
+@app.route('/contato', methods=['GET', 'POST'])
 def contato():
+    if request.method == 'POST':
+        resposta = _contato.enviar_email_contato()
+        return redirect('/')
     return render_template("_contato.html")
 
 
