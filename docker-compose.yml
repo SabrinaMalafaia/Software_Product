@@ -1,21 +1,21 @@
 version: "2.24.5"
 services:
- web:
-  build:
-    dockerfile: dockerfile.python
-  working_dir: /data
-  command: python _rotas.py
-  links:
-    - db
-  volumes:
-    - .:/data
-  ports:
-    - "5050:5050"
-  restart: always
-  
  db:
   build:
     dockerfile: dockerfile.mysql
   ports:
     - "3306:3306"
+  restart: always
+
+ web:
+  build:
+    dockerfile: dockerfile.python
+  working_dir: /data
+  command: python _rotas.py
+  depends_on:
+    - db
+  volumes:
+    - .:/data
+  ports:
+    - "5050:5050"
   restart: always
