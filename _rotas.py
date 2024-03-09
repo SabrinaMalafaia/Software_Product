@@ -21,7 +21,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-db = Conexao(host="localhost", port="3307", user="root",
+db = Conexao(host="localhost", port="3306", user="root",
              password="root", database="V2")
 
 
