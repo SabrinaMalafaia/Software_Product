@@ -22,7 +22,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-db = Conexao(host="localhost", port="3306", user="root",
+db = Conexao(host="localhost", port="3307", user="root",
              password="root", database="V2")
 
 
@@ -168,6 +168,21 @@ def editar_grupo(id):
 def eventos():
     resultado = _evento.listar_evento()
     return render_template("_evento.html", eventos=resultado)
+
+
+@app.route('/filtrar_eventos', methods=['GET'])
+def filtrar_eventos():
+    estado = request.args.get('estado')
+    if estado == "ALL":
+        eventos = _evento.listar_evento()
+    else:
+        estado = "%" + estado
+        db.conectar()
+        query = "SELECT * FROM eventos WHERE localizacao LIKE %s"
+        values = (estado,)
+        eventos = db.executar(query, values)
+
+    return render_template('_evento.html', eventos=eventos)
 
 
 @app.route('/cadastrar_evento', methods=['GET', 'POST'])
