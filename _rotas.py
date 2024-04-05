@@ -4,6 +4,7 @@ from _dados import Conexao
 import _contato
 import _grupo
 import _parceiro
+import _evento
 import requests
 
 app = Flask(__name__)
@@ -160,6 +161,21 @@ def editar_grupo(id):
         return redirect('/')
 
     return render_template('_editargrupo.html', grupo=grupo)
+
+
+# EVENTOS ##############
+@app.route('/eventos', methods=['GET'])  # OK
+def eventos():
+    resultado = _evento.listar_evento()
+    return render_template("_evento.html", eventos=resultado)
+
+
+@app.route('/cadastrar_evento', methods=['GET', 'POST'])
+def cadastrar_evento():
+    if request.method == 'POST':
+        resposta = _evento.cadastrar_evento()
+        return render_template("_index.html", re=resposta)
+    return render_template("_cadastrarEvento.html")
 
 
 # CONTATO ##############

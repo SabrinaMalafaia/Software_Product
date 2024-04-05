@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+
+{% block conteudo %}
+<h1 class="display-2">Adicionar Evento</h1>
+<form action="cadastrar_evento" method="POST">
+    <label for="titulo">Título:</label><br>
+    <input type="text" id="titulo" name="titulo" required><br><br>
+
+    <label for="descricao">Descrição:</label><br>
+    <textarea id="descricao" name="descricao" rows="4" cols="50" required></textarea><br><br>
+
+    <label for="data_inicio">Data de Início:</label><br>
+    <input type="datetime-local" id="data_inicio" name="data_inicio" required><br><br>
+
+    <label for="data_fim">Data de Término:</label><br>
+    <input type="datetime-local" id="data_fim" name="data_fim" required><br><br>
+
+    <label for="localizacao">Localização:</label><br>
+    <input type="text" id="localizacao" name="localizacao" required><br><br>
+
+    <input type="submit" value="Cadastrar">
+</form>
+
+{% endblock conteudo %}
