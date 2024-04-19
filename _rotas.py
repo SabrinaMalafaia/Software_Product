@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_mail import Mail, Message
 from _dados import Conexao
 import _contato
@@ -160,7 +160,7 @@ def editar_grupo(id):
 
         return redirect('/')
 
-    return render_template('_editargrupo.html', grupo=grupo)
+    return render_template('_editarGrupo.html', grupo=grupo)
 
 
 # EVENTOS ##############
@@ -191,6 +191,26 @@ def cadastrar_evento():
         resposta = _evento.cadastrar_evento()
         return render_template("_index.html", re=resposta)
     return render_template("_cadastrarEvento.html")
+
+
+@app.route('/editar_evento/<int:id>', methods=['GET', 'POST'])
+def editar_evento(id):
+    evento = _evento.buscar_evento_id(id)
+
+    if request.method == 'POST':
+        dados = {
+            'titulo': request.form['titulo'],
+            'descricao': request.form['descricao'],
+            'data_inicio': request.form['data_inicio'],
+            'data_fim': request.form['data_fim'],
+            'localizacao': request.form['localizacao']
+        }
+
+        _evento.atualizar_evento(id, dados)
+
+        return redirect('/eventos')
+
+    return render_template('_editarEvento.html', evento=evento)
 
 
 # CONTATO ##############

@@ -44,6 +44,7 @@
     <li>
         <strong>{{ evento[1] }}</strong> - {{ evento[3] }} até {{ evento[4] }} - {{ evento[5] }}
         <p>{{ evento[2] }}</p>
+        <a href="{{ url_for('editar_evento', id=evento[0]) }}">Editar</a>
     </li>
     {% endfor %}
 </ul>
