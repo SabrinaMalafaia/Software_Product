@@ -4,7 +4,7 @@ from _dados import Conexao
 import _contato
 import _grupo
 import _parceiro
-import _evento
+from _evento import Evento
 import requests
 
 app = Flask(__name__)
@@ -166,7 +166,7 @@ def editar_grupo(id):
 # EVENTOS ##############
 @app.route('/eventos', methods=['GET'])  # OK
 def eventos():
-    resultado = _evento.listar_evento()
+    resultado = Evento.listar_evento()
     return render_template("_evento.html", eventos=resultado)
 
 
@@ -174,7 +174,7 @@ def eventos():
 def filtrar_eventos():
     estado = request.args.get('estado')
     if estado == "ALL":
-        eventos = _evento.listar_evento()
+        eventos = Evento.listar_evento()
     else:
         estado = "%" + estado
         db.conectar()
@@ -188,29 +188,53 @@ def filtrar_eventos():
 @app.route('/cadastrar_evento', methods=['GET', 'POST'])
 def cadastrar_evento():
     if request.method == 'POST':
-        resposta = _evento.cadastrar_evento()
-        return render_template("_index.html", re=resposta)
+        titulo = request.form['titulo']
+        descricao = request.form['descricao']
+        data_inicio = request.form['data_inicio']
+        data_fim = request.form['data_fim']
+        localizacao = request.form['localizacao']
+
+        novo_evento = Evento(
+            titulo, descricao, data_inicio, data_fim, localizacao)
+
+        novo_evento.cadastrar_evento()
+
+        return render_template("_index.html")
+
     return render_template("_cadastrarEvento.html")
 
 
 @app.route('/editar_evento/<int:id>', methods=['GET', 'POST'])
 def editar_evento(id):
-    evento = _evento.buscar_evento_id(id)
+    evento = Evento.buscar_evento_id(id)
 
     if request.method == 'POST':
-        dados = {
-            'titulo': request.form['titulo'],
-            'descricao': request.form['descricao'],
-            'data_inicio': request.form['data_inicio'],
-            'data_fim': request.form['data_fim'],
-            'localizacao': request.form['localizacao']
-        }
+        titulo = request.form['titulo']
+        descricao = request.form['descricao']
+        data_inicio = request.form['data_inicio']
+        data_fim = request.form['data_fim']
+        localizacao = request.form['localizacao']
 
-        _evento.atualizar_evento(id, dados)
+        evento_editado = Evento(
+            titulo, descricao, data_inicio, data_fim, localizacao)
+
+        evento_editado.definir_id(id)
+
+        evento_editado.editar_evento()
 
         return redirect('/eventos')
 
     return render_template('_editarEvento.html', evento=evento)
+
+
+@app.route('/apagar_evento/<int:id>', methods=['POST', 'GET'])
+def apagar_evento(id):
+    evento = Evento.buscar_evento_id(id)
+    if isinstance(evento, Evento):
+        evento.excluir_evento()
+        return redirect('/eventos')
+    else:
+        return evento, 404
 
 
 # CONTATO ##############
@@ -233,7 +257,7 @@ def buscar_cep():
 
 
 # LOGIN ##############
-@app.route('/login', methods=['GET'])  # Rota que exibe a tela de Login
+@app.route('/login', methods=['GET'])
 def entrar():
     return render_template('_login.html')
 

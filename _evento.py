@@ -5,89 +5,115 @@ db = Conexao(host="localhost", port="3307", user="root",
              password="root", database="V2")
 
 
-class Eventos:
-    pass
+class Evento:
+    def __init__(self, titulo, descricao, data_inicio, data_fim, localizacao):
+        self.titulo = titulo
+        self.descricao = descricao
+        self.data_inicio = data_inicio
+        self.data_fim = data_fim
+        self.localizacao = localizacao
+        self.id = None
 
+    def definir_id(self, id_evento):
+        self.id = id_evento
 
-def listar_evento():  # Ok
-    db.conectar()
-    try:
-        query = "SELECT * FROM eventos ORDER BY data_inicio"
-        resultado = db.executar(query)
-        return resultado
-    except Exception as e:
-        return f"Erro: {str(e)}"
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
-
-
-def buscar_evento_id(id):
-    db.conectar()
-    try:
-        query = "SELECT * FROM eventos WHERE id_evento = %s"
-        values = (id,)
-        resultado = db.executar(query, values)
-        return resultado
-
-    except Exception as e:
-        return f"Erro: {str(e)}"
-
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
-
-
-def cadastrar_evento():  # Ok
-    db.conectar()
-    try:
-        if request.method == 'POST':
-            titulo = request.form['titulo']
-            descricao = request.form['descricao']
-            data_inicio = request.form['data_inicio']
-            data_fim = request.form['data_fim']
-            localizacao = request.form['localizacao']
-
+    def cadastrar_evento(self):
+        db.conectar()
+        try:
             query = "INSERT INTO eventos (titulo, descricao, data_inicio, data_fim, localizacao) VALUES (%s, %s, %s, %s, %s)"
 
-            values = (titulo, descricao, data_inicio, data_fim, localizacao)
+            values = (self.titulo, self.descricao, self.data_inicio,
+                      self.data_fim, self.localizacao)
 
             db.executar(query, values)
 
             return "Evento cadastrado com sucesso!"
 
-    except Exception as e:
-        return f"Erro ao adicionar parceiro: {str(e)}"
+        except Exception as e:
+            return f"Erro ao adicionar parceiro: {str(e)}"
 
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
 
+    def editar_evento(self):
+        try:
+            db.conectar()
 
-def atualizar_evento(id, dados):
-    try:
+            query = """
+            UPDATE eventos
+            SET titulo=%s, descricao=%s, data_inicio=%s, data_fim=%s, localizacao=%s
+            WHERE id_evento = %s
+            """
+
+            values = (self.titulo, self.descricao, self.data_inicio,
+                      self.data_fim, self.localizacao, self.id)
+
+            db.executar(query, values)
+
+            return "Evento atualizado com sucesso!"
+
+        except Exception as e:
+            return f"Erro ao atualizar evento: {str(e)}"
+
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
+
+    def excluir_evento(self):  # Fazendo
+        try:
+            db.conectar()
+
+            if self.id:
+
+                query = """
+                DELETE FROM eventos WHERE id_evento = %s
+                """
+
+                values = (self.id,)
+
+                db.executar(query, values)
+
+                self.id = None
+
+                return "Evento apagado com sucesso!"
+
+        except Exception as e:
+            return f"Erro ao apagar evento: {str(e)}"
+
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
+
+    def buscar_evento_id(id_evento):  # A fazer
         db.conectar()
-        titulo = dados['titulo']
-        descricao = dados['descricao']
-        data_inicio = dados['data_inicio']
-        data_fim = dados['data_fim']
-        localizacao = dados['localizacao']
+        try:
+            query = "SELECT * FROM eventos WHERE id_evento = %s"
+            values = (id_evento,)
+            resultado = db.executar(query, values)
 
-        query = """
-        UPDATE eventos
-        SET titulo=%s, descricao=%s, data_inicio=%s, data_fim=%s, localizacao=%s
-        WHERE id_evento = %s
-        """
+            if resultado:
+                evento = Evento(*resultado[0][1:])
+                evento.definir_id(id_evento)
+                return evento
+            else:
+                return None
 
-        values = (titulo, descricao, data_inicio, data_fim, localizacao, id)
+        except Exception as e:
+            return f"Erro: {str(e)}"
 
-        db.executar(query, values)
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
 
-        return "Evento atualizado com sucesso!"
-
-    except Exception as e:
-        return f"Erro ao atualizar evento: {str(e)}"
-
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
+    def listar_evento():
+        db.conectar()
+        try:
+            query = "SELECT * FROM eventos ORDER BY data_inicio"
+            resultado = db.executar(query)
+            return resultado
+        except Exception as e:
+            return f"Erro: {str(e)}"
+        finally:
+            if db.conexao is not None:
+                db.desconectar()

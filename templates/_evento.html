@@ -1,11 +1,12 @@
 {% extends '_base.html' %}
 
 {% block conteudo %}
-<h1 class="display-2">Eventos</h1>
 
-<form method="GET" action="{{ url_for('filtrar_eventos') }}">
-    <label for="estado">Filtrar por estado:</label>
-    <select name="estado" id="estado">
+<h1 class="display-2">EVENTOS</h1>
+
+<form method="GET" action="{{ url_for('filtrar_eventos') }}" style="float: inline-start;">
+    <label for="estado" class="form-group">Filtrar por estado:</label>
+    <select name="estado" id="estado" class="form-group">
         <option value="ALL" selected>Todos</option>
         <option value="AC">Acre</option>
         <option value="AL">Alagoas</option>
@@ -35,9 +36,9 @@
         <option value="SE">Sergipe</option>
         <option value="TO">Tocantins</option>
     </select>
-    <button type="submit">Filtrar</button>
+    <button type="submit" class="btn btn-outline-warning">Filtrar</button>
 </form>
-
+<br><br>
 {% if eventos %}
 <ul class="lista-bicicleta">
     {% for evento in eventos %}
@@ -45,6 +46,7 @@
         <strong>{{ evento[1] }}</strong> - {{ evento[3] }} até {{ evento[4] }} - {{ evento[5] }}
         <p>{{ evento[2] }}</p>
         <a href="{{ url_for('editar_evento', id=evento[0]) }}">Editar</a>
+        <a href="{{ url_for('apagar_evento', id=evento[0]) }}" class="excluir-link">Excluir</a>
     </li>
     {% endfor %}
 </ul>
