@@ -2,26 +2,26 @@
 
 {% block conteudo %}
 <h1 class="display-2">Atualizar Evento</h1>
-<form action="{{ url_for('editar_evento', id=evento[0][0]) }}" method="POST">
+<form action="{{ url_for('editar_evento', id=evento.id) }}" method="POST">
 
     <div class="form-group">
-        <input type="hidden" id="id_evento" name="id_evento" value="{{ evento[0][0] }}">
+        <input type="hidden" id="id_evento" name="id_evento" value="{{ evento.id }}">
     </div>
 
     <label for="titulo">Título:</label><br>
-    <input type="text" id="titulo" name="titulo" value="{{ evento[0][1] }}" required><br><br>
+    <input type="text" id="titulo" name="titulo" value="{{ evento.titulo }}" required><br><br>
 
     <label for="descricao">Descrição:</label><br>
-    <textarea id="descricao" name="descricao" rows="4" cols="50" required>{{ evento[0][2] }}</textarea><br><br>
+    <textarea id="descricao" name="descricao" rows="4" cols="50" required>{{ evento.descricao }}</textarea><br><br>
 
     <label for="data_inicio">Data de Início:</label><br>
-    <input type="datetime-local" id="data_inicio" name="data_inicio" value="{{ evento[0][3] }}" required><br><br>
+    <input type="datetime-local" id="data_inicio" name="data_inicio" value="{{ evento.data_inicio }}" required><br><br>
 
     <label for="data_fim">Data de Término:</label><br>
-    <input type="datetime-local" id="data_fim" name="data_fim" value="{{ evento[0][4] }}" required><br><br>
+    <input type="datetime-local" id="data_fim" name="data_fim" value="{{ evento.data_fim }}" required><br><br>
 
     <label for="localizacao">Localização:</label><br>
-    <input type="text" id="localizacao" name="localizacao" value="{{ evento[0][5] }}" required><br><br>
+    <input type="text" id="localizacao" name="localizacao" value="{{ evento.localizacao }}" required><br><br>
 
     <input type="submit" value="Atualizar">
 </form>
