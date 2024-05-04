@@ -25,6 +25,9 @@ mail = Mail(app)
 db = Conexao(host="db", port="3306", user="root",
              password="root", database="V2")
 
+"""db = Conexao(host="localhost", port="3307", user="root",
+             password="root", database="V2")"""
+
 
 # INDEX ##############
 @app.route('/', methods=['GET'])   # OK
