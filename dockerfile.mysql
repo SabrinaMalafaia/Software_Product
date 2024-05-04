@@ -1,9 +1,8 @@
 # Usando a imagem oficial do MySQL 8.0 como base
 FROM mysql:8.0.34
 
+ENV MYSQL_USER=root
 ENV MYSQL_ROOT_PASSWORD=root
 ENV MYSQL_DATABASE=V2
-ENV MYSQL_USER=admin
-ENV MYSQL_PASSWORD=50748523
 
 COPY ./query.sql /docker-entrypoint-initdb.d/

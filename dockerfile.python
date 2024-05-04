@@ -5,6 +5,7 @@ RUN pip install Flask
 RUN pip install Flask-Mail
 RUN pip install requests
 RUN pip install mysql-connector-python
+RUN apk add --no-cache mariadb-connector-c-dev
 
 COPY _rotas.py /_rotas.py
 ENV FLASK_APP=_rotas.py
