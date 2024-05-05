@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-from flask_mail import Mail, Message
+from flask import Flask, render_template, request, jsonify, redirect
+from flask_mail import Mail
 from _dados import Conexao
 import _contato
-import _grupo
-import _parceiro
+from _grupo import Grupo
+from _parceiro import Parceiro
 from _evento import Evento
 import requests
 
@@ -22,69 +22,83 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-db = Conexao(host="db", port="3306", user="root",
-             password="root", database="V2")
+"""db = Conexao("db", "3306", "root", "root", "V2")"""
 
-"""db = Conexao(host="localhost", port="3307", user="root",
-             password="root", database="V2")"""
+db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
-@app.route('/', methods=['GET'])   # OK
+@app.route('/', methods=['GET'])
 def home():
     return render_template("_index.html")
 
 
 # SOBRE ##############
-@app.route('/sobre', methods=['GET'])   # OK
+@app.route('/sobre', methods=['GET'])
 def sobre():
     return render_template("_sobre.html")
 
 
 # OBJETIVO ##############
-@app.route('/objetivo', methods=['GET'])   # OK
+@app.route('/objetivo', methods=['GET'])
 def objetivo():
     return render_template("_objetivo.html")
 
 
 # PARCEIROS ##############
-@app.route('/parceiro', methods=['GET'])  # OK
+@app.route('/parceiro', methods=['GET'])
 def parceiro():
     return render_template("_parceiro.html")
 
 
-@app.route('/buscar_parceiro', methods=['GET'])  # OK
+@app.route('/buscar_parceiro', methods=['GET'])
 def buscar_parceiro():
     return render_template("_buscarParceiro.html")
 
 
-@app.route('/resultado_parceiro', methods=['GET'])  # OK
+@app.route('/resultado_parceiro', methods=['GET'])
 def resultado_parceiro():
     parceiro = request.args.get('parceiro')
-    resultado = _parceiro.buscar_parceiro(parceiro)
+    resultado = Parceiro.buscar_parceiro(parceiro)
     return render_template('_buscarParceiro.html', resultado=resultado)
 
 
-@app.route('/listar_parceiro', methods=['GET'])  # OK
+@app.route('/listar_parceiro', methods=['GET'])
 def listar_parceiro():
-    resultado = _parceiro.listar_parceiro()
+    resultado = Parceiro.listar_parceiro()
     return render_template("_listarParceiros.html", parceiros=resultado)
 
 
-@app.route('/cadastrar_parceiro', methods=['GET', 'POST'])  # OK
+@app.route('/cadastrar_parceiro', methods=['GET', 'POST'])
 def cadastrar_parceiro():
     if request.method == 'POST':
-        resposta = _parceiro.adicionar_parceiro()
-        return render_template("_index.html", re=resposta)
+        parceiro = Parceiro(
+            request.form['parceiro'],
+            request.form['cep'],
+            request.form['endereco'],
+            request.form['complemento'],
+            request.form['bairro'],
+            request.form['cidade'],
+            request.form['estado'],
+            request.form['contato'],
+            request.form['responsavel'],
+            request.form['desconto'],
+            request.form['status'],
+            request.form['data'],
+            request.form['detalhes']
+        )
+        Parceiro.adicionar_parceiro()
+        return redirect('/')
     return render_template("_cadastrarParceiro.html")
 
 
 @app.route('/editar_parceiro/<id>', methods=['GET', 'POST'])
 def editar_parceiro(id):
-    parceiro = _parceiro.buscar_parceiro_id(id)
+    parceiro = Parceiro.buscar_parceiro_id(id)
 
     if request.method == 'POST':
         dados = {
+            'id_parceiro': id,
             'parceiro': request.form['parceiro'],
             'cep': request.form['cep'],
             'endereco': request.form['endereco'],
@@ -100,7 +114,7 @@ def editar_parceiro(id):
             'detalhes': request.form['detalhes']
         }
 
-        _parceiro.atualizar_parceiro(id, dados)
+        Parceiro.editar_parceiro(dados)
 
         return redirect('/')
 
@@ -108,43 +122,58 @@ def editar_parceiro(id):
 
 
 # GRUPOS ##############
-@app.route('/grupo', methods=['GET'])  # OK
+@app.route('/grupo', methods=['GET'])
 def grupo():
     return render_template("_grupo.html")
 
 
-@app.route('/buscar_grupo', methods=['GET'])  # OK
+@app.route('/buscar_grupo', methods=['GET'])
 def buscar_grupo():
     return render_template("_buscarGrupo.html")
 
 
-@app.route('/resultado_grupo', methods=['GET'])  # OK
+@app.route('/resultado_grupo', methods=['GET'])
 def resultado_grupo():
     grupo = request.args.get('grupo')
-    resultado = _grupo.buscar_grupo(grupo)
+    resultado = Grupo.buscar_grupo(grupo)
     return render_template('_buscarGrupo.html', resultado=resultado)
 
 
-@app.route('/listar_grupo', methods=['GET'])  # OK
+@app.route('/listar_grupo', methods=['GET'])
 def listar_grupo():
-    resultado = _grupo.listar_grupo()
+    resultado = Grupo.listar_grupo()
     return render_template('_listarGrupos.html', grupos=resultado)
 
 
-@app.route('/cadastrar_grupo', methods=['GET', 'POST'])  # OK
+@app.route('/cadastrar_grupo', methods=['GET', 'POST'])
 def cadastrar_grupo():
     if request.method == 'POST':
-        resposta = _grupo.adicionar_grupo()
-        return render_template("_index.html")
+        grupo = Grupo(
+            request.form['grupo'],
+            request.form['cep'],
+            request.form['endereco'],
+            request.form['complemento'],
+            request.form['bairro'],
+            request.form['cidade'],
+            request.form['estado'],
+            request.form['contato'],
+            request.form['responsavel'],
+            request.form['status'],
+            request.form['data'],
+            request.form['detalhes']
+        )
+        grupo.adicionar_grupo()
+        return redirect('/')
     return render_template("_cadastrarGrupo.html")
 
 
 @app.route('/editar_grupo/<id>', methods=['GET', 'POST'])
 def editar_grupo(id):
-    grupo = _grupo.buscar_grupo_id(id)
+    grupo = Grupo.buscar_grupo_id(id)
 
     if request.method == 'POST':
         dados = {
+            'id_grupo': id,
             'grupo': request.form['grupo'],
             'cep': request.form['cep'],
             'endereco': request.form['endereco'],
@@ -159,7 +188,7 @@ def editar_grupo(id):
             'detalhes': request.form['detalhes']
         }
 
-        _grupo.atualizar_grupo(id, dados)
+        Grupo.editar_grupo(dados)
 
         return redirect('/')
 
@@ -167,7 +196,7 @@ def editar_grupo(id):
 
 
 # EVENTOS ##############
-@app.route('/eventos', methods=['GET'])  # OK
+@app.route('/eventos', methods=['GET'])
 def eventos():
     resultado = Evento.listar_evento()
     return render_template("_evento.html", eventos=resultado)
@@ -244,7 +273,7 @@ def apagar_evento(id):
 @app.route('/contato', methods=['GET', 'POST'])
 def contato():
     if request.method == 'POST':
-        resposta = _contato.enviar_email_contato()
+        _contato.enviar_email_contato()
         return redirect('/')
     return render_template("_contato.html")
 

@@ -1,8 +1,6 @@
-from flask import request, jsonify
 from _dados import Conexao
 
-db = Conexao(host="localhost", port="3307", user="root",
-             password="root", database="V2")
+db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 class Evento:
@@ -60,7 +58,7 @@ class Evento:
             if db.conexao is not None:
                 db.desconectar()
 
-    def excluir_evento(self):  # Fazendo
+    def excluir_evento(self):
         try:
             db.conectar()
 
@@ -85,7 +83,7 @@ class Evento:
             if db.conexao is not None:
                 db.desconectar()
 
-    def buscar_evento_id(id_evento):  # A fazer
+    def buscar_evento_id(id_evento):  # Fazendo
         db.conectar()
         try:
             query = "SELECT * FROM eventos WHERE id_evento = %s"

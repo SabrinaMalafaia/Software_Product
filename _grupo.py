@@ -1,134 +1,108 @@
-from flask import request
 from _dados import Conexao
 
-db = Conexao(host="localhost", port="3307", user="root",
-             password="root", database="V2")
+db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
-class Grupo():
-    pass
+class Grupo:
+    def __init__(self, grupo, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, status, data, detalhes):
+        self.grupo = grupo
+        self.cep = cep
+        self.endereco = endereco
+        self.complemento = complemento
+        self.bairro = bairro
+        self.cidade = cidade
+        self.estado = estado
+        self.contato = contato
+        self.responsavel = responsavel
+        self.status = status
+        self.data = data
+        self.detalhes = detalhes
 
-
-def buscar_grupo_id(id):
-    db.conectar()
-    try:
-        query = "SELECT * FROM grupos WHERE id_grupo = %s"
-        values = (id,)
-        resultado = db.executar(query, values)
-        return resultado
-
-    except Exception as e:
-        return f"Erro: {str(e)}"
-
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
-
-
-def buscar_grupo(grupo):
-    db.conectar()
-    try:
-        query = "SELECT * FROM grupos WHERE grupo LIKE %s"
-        values = ('%' + grupo + '%',)
-        resultado = db.executar(query, values)
-        return resultado
-
-    except Exception as e:
-        return f"Erro: {str(e)}"
-
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
-
-
-def listar_grupo():
-    db.conectar()
-    try:
-        query = "SELECT * FROM grupos WHERE status = '1'"
-        resultado = db.executar(query)
-        return resultado
-
-    except Exception as e:
-        return f"Erro: {str(e)}"
-
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
-
-
-def adicionar_grupo():
-    try:
+    def buscar_grupo_id(id_grupo):
         db.conectar()
-        if request.method == 'POST':
-            grupo = request.form['grupo']
-            cep = request.form['cep']
-            endereco = request.form['endereco']
-            complemento = request.form['complemento']
-            bairro = request.form['bairro']
-            cidade = request.form['cidade']
-            estado = request.form['estado']
-            contato = request.form['contato']
-            responsavel = request.form['responsavel']
-            status = request.form['status']
-            data = request.form['data']
-            detalhes = request.form['detalhes']
+        try:
+            query = "SELECT * FROM grupos WHERE id_grupo = %s"
+            values = (id_grupo,)
+            resultado = db.executar(query, values)
+            return resultado
 
-            if complemento == "":
-                complemento = None
+        except Exception as e:
+            return f"Erro: {str(e)}"
+
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
+
+    def buscar_grupo(grupo):
+        db.conectar()
+        try:
+            query = "SELECT * FROM grupos WHERE grupo LIKE %s"
+            values = ('%' + grupo + '%',)
+            resultado = db.executar(query, values)
+            return resultado
+
+        except Exception as e:
+            return f"Erro: {str(e)}"
+
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
+
+    def listar_grupo():
+        db.conectar()
+        try:
+            query = "SELECT * FROM grupos WHERE status = '1'"
+            resultado = db.executar(query)
+            return resultado
+
+        except Exception as e:
+            return f"Erro: {str(e)}"
+
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
+
+    def adicionar_grupo(self):
+        try:
+            db.conectar()
 
             query = "INSERT INTO grupos (grupo, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (grupo, cep, endereco, complemento, bairro, cidade,
-                      estado, contato, responsavel, detalhes, data, status)
+            values = (self.grupo, self.cep, self.endereco, self.complemento, self.bairro, self.cidade,
+                      self.estado, self.contato, self.responsavel, self.detalhes, self.data, self.status)
 
             db.executar(query, values)
 
             return "Dados inseridos com sucesso!"
-        else:
-            return "Método Inválido!"
 
-    except Exception as e:
-        return f"Erro: {str(e)}"
+        except Exception as e:
+            return f"Erro: {str(e)}"
 
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
 
+    def editar_grupo(dados):
+        try:
+            db.conectar()
 
-def atualizar_grupo(id, dados):
-    try:
-        db.conectar()
-        grupo = dados['grupo']
-        cep = dados['cep']
-        endereco = dados['endereco']
-        complemento = dados['complemento']
-        bairro = dados['bairro']
-        cidade = dados['cidade']
-        estado = dados['estado']
-        contato = dados['contato']
-        responsavel = dados['responsavel']
-        status = dados['status']
-        data = dados['data']
-        detalhes = dados['detalhes']
+            query = """
+            UPDATE grupos
+            SET grupo=%s, cep=%s, endereco=%s, complemento=%s, bairro=%s, cidade=%s, estado=%s, contato=%s, responsavel=%s, detalhes=%s, data=%s, status=%s
+            WHERE id_grupo = %s
+            """
 
-        if not complemento:
-            complemento = None
+            values = (
+                dados['grupo'], dados['cep'], dados['endereco'], dados['complemento'], dados['bairro'], dados['cidade'],
+                dados['estado'], dados['contato'], dados['responsavel'], dados['detalhes'], dados['data'], dados['status'], dados['id_grupo']
+            )
 
-        query = """
-        UPDATE grupos
-        SET grupo=%s, cep=%s, endereco=%s, complemento=%s, bairro=%s, cidade=%s, estado=%s, contato=%s, responsavel=%s, detalhes=%s, data=%s, status=%s
-        WHERE id_grupo = %s
-        """
+            db.executar(query, values)
 
-        values = (grupo, cep, endereco, complemento, bairro, cidade,
-                  estado, contato, responsavel, detalhes, data, status, id)
+            return "Grupo atualizado com sucesso!"
 
-        db.executar(query, values)
+        except Exception as e:
+            return f"Erro ao atualizar grupo: {str(e)}"
 
-        return "Grupo atualizado com sucesso!"
-
-    except Exception as e:
-        return f"Erro ao atualizar grupo: {str(e)}"
-
-    finally:
-        if db.conexao is not None:
-            db.desconectar()
+        finally:
+            if db.conexao is not None:
+                db.desconectar()
