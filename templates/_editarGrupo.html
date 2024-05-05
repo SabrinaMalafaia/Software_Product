@@ -4,7 +4,7 @@
 
 <br>
 
-<h1 class="display-2">ATUALIZAR DADOS</h1>
+<h1 class="display-2">ATUALIZAR GRUPO</h1>
 <form action="{{ url_for('editar_grupo', id=grupo[0][0]) }}" method="POST">
 
     <div class="form-group">
@@ -84,7 +84,7 @@
         <textarea class="form-control" name="detalhes" id="detalhes" rows="5" cols="50">{{ grupo[0][10] }}</textarea>
     </div><br>
 
-    <button type="submit" class="btn btn-warning">Atualizar</button>
+    <button type="submit" class="btn btn-warning">Salvar</button>
     <button type="button" class="btn btn-secondary" onclick="window.location.href = '/';">Cancelar</button>
 
 </form>

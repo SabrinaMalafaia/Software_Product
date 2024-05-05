@@ -1,7 +1,7 @@
 {% extends '_base.html' %}
 
 {% block conteudo %}
-<h1 class="display-2">Adicionar Evento</h1>
+<h1 class="display-2">CADASTRO DE EVENTO</h1>
 <form action="cadastrar_evento" method="POST">
     <label for="titulo">Título:</label><br>
     <input type="text" id="titulo" name="titulo" required><br><br>
@@ -18,7 +18,9 @@
     <label for="localizacao">Localização:</label><br>
     <input type="text" id="localizacao" name="localizacao" required><br><br>
 
-    <input type="submit" value="Cadastrar">
+    <button type="submit" class="btn btn-warning">Cadastrar</button>
+    <button type="reset" class="btn btn-dark">Limpar</button>
+    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/';">Cancelar</button>
 </form>
 
 {% endblock conteudo %}

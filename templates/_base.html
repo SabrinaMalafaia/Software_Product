@@ -36,16 +36,17 @@
                             Parceiro
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{url_for('parceiro')}}">Parcerias</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('parceiro')}}">Sobre Parceria</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{url_for('buscar_parceiro')}}">Buscar</a></li>
-                            <li><a class="dropdown-item" href="{{url_for('listar_parceiro')}}">Listar</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('buscar_parceiro')}}">Buscar Parceiro</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('listar_parceiro')}}">Listar Parceiro</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{url_for('cadastrar_parceiro')}}">Adicionar</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('cadastrar_parceiro')}}">Adicionar Parceiro</a>
+                            </li>
                         </ul>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -53,25 +54,23 @@
                             Grupo
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{url_for('grupo')}}">Grupos</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('grupo')}}">Sobre Grupo</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{url_for('buscar_grupo')}}">Buscar</a></li>
-                            <li><a class="dropdown-item" href="{{url_for('listar_grupo')}}">Listar</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('buscar_grupo')}}">Buscar Grupo</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('listar_grupo')}}">Listar Grupo</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{url_for('cadastrar_grupo')}}">Adicionar</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('cadastrar_grupo')}}">Adicionar Grupo</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Eventos
-                        </a>
+                            data-bs-toggle="dropdown" aria-expanded="false">Eventos</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Eventos</a></li>
+                            <li><a class="dropdown-item" href="#">Sobre Eventos</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -99,27 +98,34 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Criar Conteúdo</a></li>
+                            <li><a class="dropdown-item" href="#">Adicionar Conteúdo</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('contato')}}">Contato</a>
                     </li>
                 </ul>
+
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('entrar')}}">Entrar</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
+
 
     <div class="container">
         {% block conteudo %}
         {%endblock conteudo %}
     </div>
 
-    <!--
-    <footer>
-        <h6>Todos os direitos reservados.</h6>
+    <!---->
+    <footer class="rodape">
+        Além do Pedal - Todos os direitos reservados - by Sabrina Malafaia
     </footer>
-    -->
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

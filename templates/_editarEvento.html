@@ -1,7 +1,7 @@
 {% extends '_base.html' %}
 
 {% block conteudo %}
-<h1 class="display-2">Atualizar Evento</h1>
+<h1 class="display-2">ATUALIZAR EVENTO</h1>
 <form action="{{ url_for('editar_evento', id=evento.id) }}" method="POST">
 
     <div class="form-group">
@@ -23,7 +23,8 @@
     <label for="localizacao">Localização:</label><br>
     <input type="text" id="localizacao" name="localizacao" value="{{ evento.localizacao }}" required><br><br>
 
-    <input type="submit" value="Atualizar">
+    <button type="submit" class="btn btn-warning">Salvar</button>
+    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/';">Cancelar</button>
 </form>
 
 {% endblock conteudo %}
