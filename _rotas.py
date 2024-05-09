@@ -22,9 +22,9 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-"""db = Conexao("db", "3306", "root", "root", "V2")"""
+db = Conexao("db", "3306", "root", "root", "V2")
 
-db = Conexao("localhost", "3307", "root", "root", "V2")
+# db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
@@ -289,9 +289,13 @@ def buscar_cep():
 
 
 # LOGIN ##############
-@app.route('/login', methods=['GET'])
-def entrar():
-    return render_template('_login.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Lógica de verificação de login
+        return 'Login bem-sucedido!'
+    else:
+        return render_template('_login.html')
 
 
 # ERRO ##############
