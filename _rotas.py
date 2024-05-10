@@ -22,9 +22,9 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-db = Conexao("db", "3306", "root", "root", "V2")
+# db = Conexao("db", "3306", "root", "root", "V2")
 
-# db = Conexao("localhost", "3307", "root", "root", "V2")
+db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
@@ -302,6 +302,13 @@ def login():
 @app.errorhandler(404)
 def erro404(e):  # Erro
     return render_template('_erro.html'), 404
+
+# TESTE ##############
+
+
+@app.route('/teste', methods=['GET'])
+def teste():
+    return render_template("teste.html")
 
 
 # RUN ##############
