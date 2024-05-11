@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_mail import Mail
 from _dados import Conexao
 import _contato
@@ -10,9 +10,9 @@ import requests
 app = Flask(__name__)
 
 # Configurações do Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # SMTP server
-app.config['MAIL_PORT'] = 587  # Porta SMTP
-app.config['MAIL_USE_TLS'] = True  # TLS para segurança
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
 # cleoalves.p.e@gmail.com
 app.config['MAIL_USERNAME'] = 'rpa.malafaia@gmail.com'
 app.config['MAIL_PASSWORD'] = 'kxsw zyza mmjy atsm'
@@ -22,9 +22,9 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-# db = Conexao("db", "3306", "root", "root", "V2")
+db = Conexao("db", "3306", "root", "root", "V2")
 
-db = Conexao("localhost", "3307", "root", "root", "V2")
+# db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
@@ -88,7 +88,7 @@ def cadastrar_parceiro():
             request.form['detalhes']
         )
         Parceiro.adicionar_parceiro()
-        return redirect('/')
+        return redirect(url_for('home'))
     return render_template("_cadastrarParceiro.html")
 
 
@@ -116,7 +116,7 @@ def editar_parceiro(id):
 
         Parceiro.editar_parceiro(dados)
 
-        return redirect('/')
+        return redirect(url_for('home'))
 
     return render_template('_editarParceiro.html', parceiro=parceiro)
 
@@ -163,7 +163,7 @@ def cadastrar_grupo():
             request.form['detalhes']
         )
         grupo.adicionar_grupo()
-        return redirect('/')
+        return redirect(url_for('home'))
     return render_template("_cadastrarGrupo.html")
 
 
@@ -190,7 +190,7 @@ def editar_grupo(id):
 
         Grupo.editar_grupo(dados)
 
-        return redirect('/')
+        return redirect(url_for('home'))
 
     return render_template('_editarGrupo.html', grupo=grupo)
 
@@ -254,7 +254,7 @@ def editar_evento(id):
 
         evento_editado.editar_evento()
 
-        return redirect('/eventos')
+        return redirect(url_for('eventos'))
 
     return render_template('_editarEvento.html', evento=evento)
 
@@ -264,7 +264,7 @@ def apagar_evento(id):
     evento = Evento.buscar_evento_id(id)
     if isinstance(evento, Evento):
         evento.excluir_evento()
-        return redirect('/eventos')
+        return redirect(url_for('eventos'))
     else:
         return evento, 404
 
@@ -274,7 +274,7 @@ def apagar_evento(id):
 def contato():
     if request.method == 'POST':
         _contato.enviar_email_contato()
-        return redirect('/')
+        return redirect(url_for('home'))
     return render_template("_contato.html")
 
 
@@ -303,9 +303,8 @@ def login():
 def erro404(e):  # Erro
     return render_template('_erro.html'), 404
 
+
 # TESTE ##############
-
-
 @app.route('/teste', methods=['GET'])
 def teste():
     return render_template("teste.html")

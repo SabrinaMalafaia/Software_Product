@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/sobre">Sobre</a>
+                <a class="nav-link" href="{{ url_for('sobre') }}">Sobre</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/objetivo">Objetivo</a>
+                <a class="nav-link" href="{{ url_for('objetivo') }}">Objetivo</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -20,11 +20,11 @@
                     Parceiro
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/parceiro">Sobre Parceria</a>
-                    <a class="dropdown-item" href="/buscar_parceiro">Buscar Parceiro</a>
-                    <a class="dropdown-item" href="/listar_parceiro">Listar Parceiro</a>
+                    <a class="dropdown-item" href="{{ url_for('parceiro') }}">Sobre Parceria</a>
+                    <a class="dropdown-item" href="{{ url_for('buscar_parceiro') }}">Buscar Parceiro</a>
+                    <a class="dropdown-item" href="{{ url_for('listar_parceiro') }}">Listar Parceiro</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/cadastrar_parceiro">Adicionar Parceiro</a>
+                    <a class="dropdown-item" href="{{ url_for('cadastrar_parceiro') }}">Adicionar Parceiro</a>
                 </div>
             </li>
 
@@ -34,11 +34,11 @@
                     Grupo
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/grupo">Sobre Grupo</a>
-                    <a class="dropdown-item" href="/buscar_grupo">Buscar Grupo</a>
-                    <a class="dropdown-item" href="/listar_grupo">Listar Grupo</a>
+                    <a class="dropdown-item" href="{{ url_for('grupo') }}">Sobre Grupo</a>
+                    <a class="dropdown-item" href="{{ url_for('buscar_grupo') }}">Buscar Grupo</a>
+                    <a class="dropdown-item" href="{{ url_for('listar_grupo') }}">Listar Grupo</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/cadastrar_grupo">Adicionar Grupo</a>
+                    <a class="dropdown-item" href="{{ url_for('cadastrar_grupo') }}">Adicionar Grupo</a>
                 </div>
             </li>
 
@@ -48,9 +48,9 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item disabled" href="#">Sobre Eventos</a>
                     <a class="dropdown-item disabled" href="#">Buscar Eventos</a>
-                    <a class="dropdown-item" href="/eventos">Listar Eventos</a>
+                    <a class="dropdown-item" href="{{ url_for('eventos') }}">Listar Eventos</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/cadastrar_evento">Adicionar Evento</a>
+                    <a class="dropdown-item" href="{{ url_for('cadastrar_evento') }}">Adicionar Evento</a>
                 </div>
             </li>
 
@@ -69,13 +69,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/contato">Contato</a>
+                <a class="nav-link" href="{{ url_for('contato') }}">Contato</a>
             </li>
 
         </ul>
         <ul class="navbar-nav form-inline my-2 my-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
             </li>
 
             <li class="nav-item">
