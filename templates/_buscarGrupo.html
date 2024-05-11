@@ -49,8 +49,7 @@
             {% endif %}
         </td>
         <td>
-            <a href='{{ url_for("editar_grupo", id=item[0]) }}' class="btn btn-warning">
-                <i> </i>Editar</a>
+            <a href="{{ url_for('editar_grupo', id=item[0]) }}" class="btn btn-warning">Editar</a>
         </td>
     </tr>
     {% endfor %}

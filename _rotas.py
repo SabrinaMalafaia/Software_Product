@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_mail import Mail
 from _dados import Conexao
-import _contato
 from _grupo import Grupo
 from _parceiro import Parceiro
 from _evento import Evento
+import _contato
 import requests
 
 app = Flask(__name__)
@@ -22,9 +22,9 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
-db = Conexao("db", "3306", "root", "root", "V2")
+# db = Conexao("db", "3306", "root", "root", "V2")
 
-# db = Conexao("localhost", "3307", "root", "root", "V2")
+db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
@@ -87,7 +87,7 @@ def cadastrar_parceiro():
             request.form['data'],
             request.form['detalhes']
         )
-        Parceiro.adicionar_parceiro()
+        Parceiro.adicionar_parceiro(parceiro)
         return redirect(url_for('home'))
     return render_template("_cadastrarParceiro.html")
 
@@ -162,7 +162,7 @@ def cadastrar_grupo():
             request.form['data'],
             request.form['detalhes']
         )
-        grupo.adicionar_grupo()
+        Grupo.adicionar_grupo(grupo)
         return redirect(url_for('home'))
     return render_template("_cadastrarGrupo.html")
 

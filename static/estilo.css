@@ -33,7 +33,6 @@ li {
 .container {
     min-height: calc(100vh - 60px);
     padding-bottom: 60px;
-    overflow: auto;
 }
 
 .rodape {

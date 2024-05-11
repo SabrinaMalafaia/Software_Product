@@ -4,54 +4,59 @@
 
 <h1 class="display-2">EVENTOS</h1>
 
-<form method="GET" action="{{ url_for('filtrar_eventos') }}" style="float: inline-start;">
-    <label for="estado" class="form-group">Filtrar por estado:</label>
-    <select name="estado" id="estado" class="form-group">
-        <option value="ALL" selected>Todos</option>
-        <option value="AC">Acre</option>
-        <option value="AL">Alagoas</option>
-        <option value="AP">Amapá</option>
-        <option value="AM">Amazonas</option>
-        <option value="BA">Bahia</option>
-        <option value="CE">Ceará</option>
-        <option value="DF">Distrito Federal</option>
-        <option value="ES">Espírito Santo</option>
-        <option value="GO">Goiás</option>
-        <option value="MA">Maranhão</option>
-        <option value="MT">Mato Grosso</option>
-        <option value="MS">Mato Grosso do Sul</option>
-        <option value="MG">Minas Gerais</option>
-        <option value="PA">Pará</option>
-        <option value="PB">Paraíba</option>
-        <option value="PR">Paraná</option>
-        <option value="PE">Pernambuco</option>
-        <option value="PI">Piauí</option>
-        <option value="RJ">Rio de Janeiro</option>
-        <option value="RN">Rio Grande do Norte</option>
-        <option value="RS">Rio Grande do Sul</option>
-        <option value="RO">Rondônia</option>
-        <option value="RR">Roraima</option>
-        <option value="SC">Santa Catarina</option>
-        <option value="SP">São Paulo</option>
-        <option value="SE">Sergipe</option>
-        <option value="TO">Tocantins</option>
-    </select>
-    <button type="submit" class="btn btn-warning">Filtrar</button>
+<form method="GET" action="{{ url_for('filtrar_eventos') }}">
+    <div class="input-group">
+        <select class="custom-select" id="estado" name="estado">
+            <option value="ALL" selected>Todos</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-warning" type="submit">Filtrar</button>
+        </div>
+    </div>
 </form>
-<br><br>
-{% if eventos %}
-<ul class="lista-bicicleta">
-    {% for evento in eventos %}
-    <li>
-        <strong>{{ evento[1] }}</strong> - {{ evento[3] }} até {{ evento[4] }} - {{ evento[5] }}
-        <p>{{ evento[2] }}</p>
-        <a href="{{ url_for('editar_evento', id=evento[0]) }}">Editar</a>
-        <a href="{{ url_for('apagar_evento', id=evento[0]) }}" class="excluir-link">Excluir</a>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>Não há eventos cadastrados.</p>
-{% endif %}
+
+<div class="mt-4">
+    {% if eventos %}
+    <ul class="lista-bicicleta">
+        {% for evento in eventos %}
+        <li>
+            <strong>{{ evento[1] }}</strong> - {{ evento[3] }} até {{ evento[4] }} - {{ evento[5] }}
+            <p>{{ evento[2] }}</p>
+            <a href="{{ url_for('editar_evento', id=evento[0]) }}">Editar</a>
+            <a href="{{ url_for('apagar_evento', id=evento[0]) }}" class="excluir-link">Excluir</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Não há eventos cadastrados.</p>
+    {% endif %}
+</div>
 
 {% endblock conteudo %}
