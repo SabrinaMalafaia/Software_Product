@@ -1,4 +1,4 @@
-from _dados import Conexao
+from alemdopedal.dados import Conexao
 
 db = Conexao("localhost", "3307", "root", "root", "V2")
 

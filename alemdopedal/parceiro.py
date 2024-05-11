@@ -1,4 +1,4 @@
-from _dados import Conexao
+from alemdopedal.dados import Conexao
 
 db = Conexao("localhost", "3307", "root", "root", "V2")
 
@@ -67,10 +67,10 @@ class Parceiro:
         try:
             db.conectar()
 
-            query = "INSERT INTO parceiros (parceiro, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, desconto, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO parceiros (parceiro, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, desconto, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW(), %s)"
 
             values = (self.parceiro, self.cep, self.endereco, self.complemento, self.bairro, self.cidade,
-                      self.estado, self.contato, self.responsavel, self.desconto, self.detalhes, self.data, self.status)
+                      self.estado, self.contato, self.responsavel, self.desconto, self.detalhes, self.status)
 
             db.executar(query, values)
 

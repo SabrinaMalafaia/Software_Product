@@ -1,11 +1,11 @@
-{% extends '_base.html' %}
+{% extends 'base.html' %}
 
 {% block conteudo %}
 
 <br>
-<form action="{{ url_for('resultado_grupo') }}" method="GET">
-    <label for="grupo">Grupo:</label>
-    <input type="text" name="grupo" required>
+<form action="{{ url_for('resultado_parceiro') }}" method="GET">
+    <label for="parceiro">Parceiro:</label>
+    <input type="text" name="parceiro" required>
     <input type="submit" value="Buscar">
 </form>
 
@@ -14,7 +14,7 @@
 
 <table>
     <tr>
-        <th>Grupo</th>
+        <th>Parceiro</th>
         <th>CEP</th>
         <th>Endereço</th>
         <th>Complemento</th>
@@ -23,6 +23,7 @@
         <th>Estado</th>
         <th>Contato</th>
         <th>Responsável</th>
+        <th>Desconto</th>
         <th>Detalhes</th>
         <th>Data</th>
         <th>Status</th>
@@ -41,15 +42,17 @@
         <td>{{ item[9] }}</td>
         <td>{{ item[10] }}</td>
         <td>{{ item[11] }}</td>
+        <td>{{ item[12] }}</td>
         <td>
-            {% if item[12] == '1' %}
+            {% if item[13] == '1' %}
             Ativo
             {% else %}
             Inativo
             {% endif %}
         </td>
         <td>
-            <a href="{{ url_for('editar_grupo', id=item[0]) }}" class="btn btn-warning">Editar</a>
+            <a href='{{ url_for("editar_parceiro", id=item[0]) }}' class="btn btn-warning">
+                <i> </i>Editar</a>
         </td>
     </tr>
     {% endfor %}

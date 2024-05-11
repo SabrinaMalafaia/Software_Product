@@ -1,72 +1,58 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-from flask_mail import Mail
-from _dados import Conexao
-from _grupo import Grupo
-from _parceiro import Parceiro
-from _evento import Evento
-import _contato
+# para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;
+from alemdopedal import app
+from flask import render_template, request, redirect, jsonify, url_for
+from alemdopedal.dados import Conexao
+from alemdopedal.parceiro import Parceiro
+from alemdopedal.grupo import Grupo
+from alemdopedal.evento import Evento
+from alemdopedal.contato import enviar_email_contato
 import requests
-
-app = Flask(__name__)
-
-# Configurações do Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-# cleoalves.p.e@gmail.com
-app.config['MAIL_USERNAME'] = 'rpa.malafaia@gmail.com'
-app.config['MAIL_PASSWORD'] = 'kxsw zyza mmjy atsm'
-# contato@alemdopedal.com
-app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
-
-mail = Mail(app)
 
 # DEPÓSITO DE DADOS ##############
 # db = Conexao("db", "3306", "root", "root", "V2")
-
 db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
 @app.route('/', methods=['GET'])
 def home():
-    return render_template("_index.html")
+    return render_template("index.html")
 
 
 # SOBRE ##############
 @app.route('/sobre', methods=['GET'])
 def sobre():
-    return render_template("_sobre.html")
+    return render_template("sobre.html")
 
 
 # OBJETIVO ##############
 @app.route('/objetivo', methods=['GET'])
 def objetivo():
-    return render_template("_objetivo.html")
+    return render_template("objetivo.html")
 
 
 # PARCEIROS ##############
 @app.route('/parceiro', methods=['GET'])
 def parceiro():
-    return render_template("_parceiro.html")
+    return render_template("parceiro.html")
 
 
 @app.route('/buscar_parceiro', methods=['GET'])
 def buscar_parceiro():
-    return render_template("_buscarParceiro.html")
+    return render_template("parceiro_buscar.html")
 
 
 @app.route('/resultado_parceiro', methods=['GET'])
 def resultado_parceiro():
     parceiro = request.args.get('parceiro')
     resultado = Parceiro.buscar_parceiro(parceiro)
-    return render_template('_buscarParceiro.html', resultado=resultado)
+    return render_template('parceiro_buscar.html', resultado=resultado)
 
 
 @app.route('/listar_parceiro', methods=['GET'])
 def listar_parceiro():
     resultado = Parceiro.listar_parceiro()
-    return render_template("_listarParceiros.html", parceiros=resultado)
+    return render_template("parceiro_listar.html", parceiros=resultado)
 
 
 @app.route('/cadastrar_parceiro', methods=['GET', 'POST'])
@@ -89,7 +75,7 @@ def cadastrar_parceiro():
         )
         Parceiro.adicionar_parceiro(parceiro)
         return redirect(url_for('home'))
-    return render_template("_cadastrarParceiro.html")
+    return render_template("parceiro_cadastrar.html")
 
 
 @app.route('/editar_parceiro/<id>', methods=['GET', 'POST'])
@@ -118,31 +104,31 @@ def editar_parceiro(id):
 
         return redirect(url_for('home'))
 
-    return render_template('_editarParceiro.html', parceiro=parceiro)
+    return render_template('parceiro_editar.html', parceiro=parceiro)
 
 
 # GRUPOS ##############
 @app.route('/grupo', methods=['GET'])
 def grupo():
-    return render_template("_grupo.html")
+    return render_template("grupo.html")
 
 
 @app.route('/buscar_grupo', methods=['GET'])
 def buscar_grupo():
-    return render_template("_buscarGrupo.html")
+    return render_template("grupo_buscar.html")
 
 
 @app.route('/resultado_grupo', methods=['GET'])
 def resultado_grupo():
     grupo = request.args.get('grupo')
     resultado = Grupo.buscar_grupo(grupo)
-    return render_template('_buscarGrupo.html', resultado=resultado)
+    return render_template('grupo_buscar.html', resultado=resultado)
 
 
 @app.route('/listar_grupo', methods=['GET'])
 def listar_grupo():
     resultado = Grupo.listar_grupo()
-    return render_template('_listarGrupos.html', grupos=resultado)
+    return render_template('grupo_listar.html', grupos=resultado)
 
 
 @app.route('/cadastrar_grupo', methods=['GET', 'POST'])
@@ -164,7 +150,7 @@ def cadastrar_grupo():
         )
         Grupo.adicionar_grupo(grupo)
         return redirect(url_for('home'))
-    return render_template("_cadastrarGrupo.html")
+    return render_template("grupo_cadastrar.html")
 
 
 @app.route('/editar_grupo/<id>', methods=['GET', 'POST'])
@@ -192,14 +178,14 @@ def editar_grupo(id):
 
         return redirect(url_for('home'))
 
-    return render_template('_editarGrupo.html', grupo=grupo)
+    return render_template('grupo_editar.html', grupo=grupo)
 
 
 # EVENTOS ##############
 @app.route('/eventos', methods=['GET'])
 def eventos():
     resultado = Evento.listar_evento()
-    return render_template("_evento.html", eventos=resultado)
+    return render_template("evento.html", eventos=resultado)
 
 
 @app.route('/filtrar_eventos', methods=['GET'])
@@ -214,7 +200,7 @@ def filtrar_eventos():
         values = (estado,)
         eventos = db.executar(query, values)
 
-    return render_template('_evento.html', eventos=eventos)
+    return render_template('evento.html', eventos=eventos)
 
 
 @app.route('/cadastrar_evento', methods=['GET', 'POST'])
@@ -233,7 +219,7 @@ def cadastrar_evento():
 
         return render_template("_index.html")
 
-    return render_template("_cadastrarEvento.html")
+    return render_template("evento_cadastrar.html")
 
 
 @app.route('/editar_evento/<int:id>', methods=['GET', 'POST'])
@@ -256,7 +242,7 @@ def editar_evento(id):
 
         return redirect(url_for('eventos'))
 
-    return render_template('_editarEvento.html', evento=evento)
+    return render_template('evento_editar.html', evento=evento)
 
 
 @app.route('/apagar_evento/<int:id>', methods=['POST', 'GET'])
@@ -273,9 +259,9 @@ def apagar_evento(id):
 @app.route('/contato', methods=['GET', 'POST'])
 def contato():
     if request.method == 'POST':
-        _contato.enviar_email_contato()
+        enviar_email_contato()
         return redirect(url_for('home'))
-    return render_template("_contato.html")
+    return render_template("contato.html")
 
 
 # CEP ##############
@@ -295,23 +281,16 @@ def login():
         # Lógica de verificação de login
         return 'Login bem-sucedido!'
     else:
-        return render_template('_login.html')
+        return render_template('login.html')
 
 
 # ERRO ##############
 @app.errorhandler(404)
 def erro404(e):  # Erro
-    return render_template('_erro.html'), 404
+    return render_template('erro.html'), 404
 
 
 # TESTE ##############
 @app.route('/teste', methods=['GET'])
 def teste():
     return render_template("teste.html")
-
-
-# RUN ##############
-if __name__ == '__main__':
-    app.run(debug=True)
-
-# para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;

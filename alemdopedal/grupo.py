@@ -1,4 +1,4 @@
-from _dados import Conexao
+from alemdopedal.dados import Conexao
 
 db = Conexao("localhost", "3307", "root", "root", "V2")
 
@@ -66,9 +66,9 @@ class Grupo:
         try:
             db.conectar()
 
-            query = "INSERT INTO grupos (grupo, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO grupos (grupo, cep, endereco, complemento, bairro, cidade, estado, contato, responsavel, detalhes, data, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW(), %s)"
             values = (self.grupo, self.cep, self.endereco, self.complemento, self.bairro, self.cidade,
-                      self.estado, self.contato, self.responsavel, self.detalhes, self.data, self.status)
+                      self.estado, self.contato, self.responsavel, self.detalhes, self.status)
 
             db.executar(query, values)
 

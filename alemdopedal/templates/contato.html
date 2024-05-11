@@ -1,4 +1,4 @@
-{% extends '_base.html' %}
+{% extends 'base.html' %}
 {% block conteudo %}
 <h1 class="display-2">CONTATO</h1>
 <p style="text-align: center;">
@@ -6,7 +6,7 @@
     contato.
 </p>
 
-<form action="contato" method="POST">
+<form action="{{ url_for('contato') }}" method="POST">
     <div class="form-group">
         <label for="nome">Nome:</label>
         <input type="text" class="form-control" id="nome" name="nome">

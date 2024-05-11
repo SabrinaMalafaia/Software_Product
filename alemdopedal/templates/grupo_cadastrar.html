@@ -1,15 +1,16 @@
-{% extends '_base.html' %}
+{% extends 'base.html' %}
 
 {% block conteudo %}
+
 <!--
 <input type="button" value="Voltar" onClick="history.go(-1)">
 -->
-<h1 class="display-2">CADASTRO DE PARCEIRO</h1>
-<form action="cadastrar_parceiro" method="POST">
+<h1 class="display-2">CADASTRO DE GRUPO</h1>
+<form action="cadastrar_grupo" method="POST">
 
     <div class="form-group">
-        <label for="parceiro">Parceiro:</label>
-        <input type="text" class="form-control" id="parceiro" name="parceiro">
+        <label for="grupo">Grupo:</label>
+        <input type="text" class="form-control" id="grupo" name="grupo">
     </div>
 
     <div class="form-group row">
@@ -57,11 +58,6 @@
         <input type="text" class="form-control" id="responsavel" name="responsavel">
     </div>
 
-    <div class="form-group">
-        <label for="desconto">Desconto:</label>
-        <input type="text" class="form-control" id="desconto" name="desconto">
-    </div>
-
     <fieldset class="form-group">
         <div class="row">
             <legend class="col-form-label col-sm-2 pt-0">Status:</legend>
@@ -82,9 +78,9 @@
         </div>
     </fieldset>
 
-    <div class="form-group">
+    <div class="form-group" style="display:none;">
         <label for="data">Data:</label>
-        <input type="date" class="form-control" id="data" name="data">
+        <input type="date" class="form-control" id="data" name="data" hidden>
     </div>
 
     <div class="form-group">

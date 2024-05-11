@@ -1,5 +1,5 @@
 from flask import request
-from _dados import Conexao
+from alemdopedal.dados import Conexao
 
 bd = Conexao()
 
