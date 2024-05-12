@@ -1,1 +1,1 @@
-web: gunicorn _rotas:app
+web: gunicorn main:app

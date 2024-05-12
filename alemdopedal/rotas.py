@@ -9,8 +9,8 @@ from alemdopedal.contato import enviar_email_contato
 import requests
 
 # DEPÓSITO DE DADOS ##############
-# db = Conexao("db", "3306", "root", "root", "V2")
-db = Conexao("localhost", "3307", "root", "root", "V2")
+db = Conexao("bd", "3306", "root", "root", "V2")
+# db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
