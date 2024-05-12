@@ -2,58 +2,65 @@
 
 {% block conteudo %}
 
-<br>
-<form action="{{ url_for('resultado_grupo') }}" method="GET">
-    <label for="grupo">Grupo:</label>
-    <input type="text" name="grupo" required>
-    <input type="submit" value="Buscar">
+<h1 class="display-2">GRUPOS</h1>
+
+<form action="{{ url_for('filtro_grupo') }}" method="GET">
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Grupo" aria-label="Grupo" aria-describedby="pesquisargrupo"
+            name="grupo">
+        <div class="input-group-append">
+            <button class="btn btn-warning" type="submit" id="pesquisargrupo">Pesquisar</button>
+        </div>
+    </div>
 </form>
 
 {% block content %}
-<h1 class="display-2">RESULTADO</h1>
 
-<table>
-    <tr>
-        <th>Grupo</th>
-        <th>CEP</th>
-        <th>Endereço</th>
-        <th>Complemento</th>
-        <th>Bairro</th>
-        <th>Cidade</th>
-        <th>Estado</th>
-        <th>Contato</th>
-        <th>Responsável</th>
-        <th>Detalhes</th>
-        <th>Data</th>
-        <th>Status</th>
-        <th>Ação</th>
-    </tr>
-    {% for item in resultado %}
-    <tr>
-        <td>{{ item[1] }}</td>
-        <td>{{ item[2] }}</td>
-        <td>{{ item[3] }}</td>
-        <td>{{ item[4] }}</td>
-        <td>{{ item[5] }}</td>
-        <td>{{ item[6] }}</td>
-        <td>{{ item[7] }}</td>
-        <td>{{ item[8] }}</td>
-        <td>{{ item[9] }}</td>
-        <td>{{ item[10] }}</td>
-        <td>{{ item[11] }}</td>
-        <td>
-            {% if item[12] == '1' %}
-            Ativo
-            {% else %}
-            Inativo
-            {% endif %}
-        </td>
-        <td>
-            <a href="{{ url_for('editar_grupo', id=item[0]) }}" class="btn btn-warning">Editar</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="table-responsive-sm">
+    <table class="table table-sm table-hover">
+        <tr>
+            <th>Grupo</th>
+            <th>CEP</th>
+            <th>Endereço</th>
+            <th>Complemento</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Contato</th>
+            <th>Responsável</th>
+            <th>Detalhes</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+        {% for item in resultado %}
+        <tr>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>{{ item[7] }}</td>
+            <td>{{ item[8] }}</td>
+            <td>{{ item[9] }}</td>
+            <td>{{ item[10] }}</td>
+            <td>{{ item[11] }}</td>
+            <td>
+                {% if item[12] == '1' %}
+                Ativo
+                {% else %}
+                Inativo
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('editar_grupo', id=item[0]) }}" class="btn btn-warning">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
 {% endblock %}
 

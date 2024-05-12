@@ -1,22 +1,41 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
+
 <h1 class="display-2">CADASTRO DE EVENTO</h1>
+
 <form action="cadastrar_evento" method="POST">
-    <label for="titulo">Título:</label><br>
-    <input type="text" id="titulo" name="titulo" required><br><br>
 
-    <label for="descricao">Descrição:</label><br>
-    <textarea id="descricao" name="descricao" rows="4" cols="50" required></textarea><br><br>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título do evento" required>
+        </div>
 
-    <label for="data_inicio">Data de Início:</label><br>
-    <input type="datetime-local" id="data_inicio" name="data_inicio" required><br><br>
+        <div class="col-md-3 mb-3">
+            <label for="localizacao">Localização</label>
+            <input type="text" class="form-control" id="localizacao" name="localizacao" placeholder="São Paulo - SP"
+                required>
+        </div>
+    </div>
 
-    <label for="data_fim">Data de Término:</label><br>
-    <input type="datetime-local" id="data_fim" name="data_fim" required><br><br>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="descricao">Descrição</label>
+            <textarea type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição do evento"
+                rows="4" cols="50" required></textarea>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="data_inicio">Data e Hora Início</label>
+            <input type="datetime-local" class="form-control" id="data_inicio" name="data_inicio" required>
 
-    <label for="localizacao">Localização:</label><br>
-    <input type="text" id="localizacao" name="localizacao" required><br><br>
+            <div class="mt-2">
+                <label for="data_fim">Data e Hora Fim</label>
+                <input type="datetime-local" class="form-control" id="data_fim" name="data_fim" required>
+            </div>
+        </div>
+
+    </div>
 
     <button type="submit" class="btn btn-warning">Cadastrar</button>
     <button type="reset" class="btn btn-dark">Limpar</button>

@@ -44,13 +44,14 @@
 
 <div class="mt-4">
     {% if eventos %}
-    <ul class="lista-bicicleta">
+    <ul class="list-group list-group-flush">
         {% for evento in eventos %}
-        <li>
+        <li class="list-group-item">
             <strong>{{ evento[1] }}</strong> - {{ evento[3] }} até {{ evento[4] }} - {{ evento[5] }}
             <p>{{ evento[2] }}</p>
-            <a href="{{ url_for('editar_evento', id=evento[0]) }}">Editar</a>
-            <a href="{{ url_for('apagar_evento', id=evento[0]) }}" class="excluir-link">Excluir</a>
+            <a href="{{ url_for('editar_evento', id=evento[0]) }}" class="list-group-item-action">Editar</a>
+            <a href="{{ url_for('apagar_evento', id=evento[0]) }}"
+                class="list-group-item-action excluir-link">Excluir</a>
         </li>
         {% endfor %}
     </ul>

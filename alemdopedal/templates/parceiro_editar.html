@@ -2,96 +2,114 @@
 
 {% block conteudo %}
 
-<br>
-
 <h1 class="display-2">ATUALIZAR PARCEIRO</h1>
+
 <form action="{{ url_for('editar_parceiro', id=parceiro[0][0]) }}" method="POST">
 
     <div class="form-group">
         <input type="hidden" id="id_parceiro" name="id_parceiro" value="{{ parceiro[0][0] }}">
     </div>
 
-    <div class="form-group">
-        <label for="parceiro">Parceiro:</label>
-        <input type="text" class="form-control" id="parceiro" name="parceiro" value='{{parceiro[0][1]}}'>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="parceiro">Parceiro:</label>
+            <input type="text" class="form-control" id="parceiro" name="parceiro" value="{{parceiro[0][1]}}">
+        </div>
+
+
+        <fieldset class="form-group col-md-4">
+            <div class="form-group col-md-6">
+                <legend class="col-form-label col-sm-2 pt-0">Status:</legend>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="ra-ativo" value="1" {% if
+                        parceiro[0][13]=='1' %} checked {% endif %}>
+                    <label class="form-check-label" for="ra-ativo">
+                        Ativo
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="ra-inativo" value="0" {% if
+                        parceiro[0][13]=='0' %} checked {% endif %}>
+                    <label class="form-check-label" for="ra-inativo">
+                        Inativo
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group col-md-4 align-items-center d-flex">
+            <label class="mr-4" for="data">Data:</label>
+            <input type="date" class="form-control col-md-6" id="data" name="data" value="{{ parceiro[0][12] }}"
+                readonly>
+        </div>
     </div>
 
-    <div class="form-group row">
-        <label for="cep">CEP:</label>
-        <div class="col-sm-8">
+    <div class="form-group">
+        <label for="endereco">Endereço</label>
+        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Rua dos ciclistas, nº 0"
+            value="{{ parceiro[0][3] }}">
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-8">
+            <label for="complemento">Complemento</label>
+            <input type="text" class="form-control" id="complemento" name="complemento"
+                placeholder="Apartamento, hotel, casa, etc." value="{{ parceiro[0][4] }}">
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="cep">CEP</label>
             <input type="text" class="form-control" id="cep" name="cep" value="{{ parceiro[0][2] }}">
         </div>
 
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-warning" onclick="buscarCep()">Consultar</button>
+        <div class="form-group col-md-2">
+            <label for="buscar">.</label>
+            <button type="button" class="form-control btn btn-warning" onclick="buscarCep()">Buscar</button>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="bairro">Bairro</label>
+            <input type="text" class="form-control" id="bairro" name="bairro" value="{{ parceiro[0][5] }}">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="cidade">Cidade</label>
+            <input type="text" class="form-control" id="cidade" name="cidade" value="{{ parceiro[0][6] }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="estado">Estado</label>
+            <input type="text" class="form-control" id="estado" name="estado" value="{{ parceiro[0][7] }}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="contato">Contato:</label>
+            <input type="text" class="form-control" id="contato" name="contato" value="{{ parceiro[0][8] }}">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="responsavel">Responsável:</label>
+            <input type="text" class="form-control" id="responsavel" name="responsavel" value="{{ parceiro[0][9] }}">
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="desconto">Desconto:</label>
+            <input type="text" class="form-control" id="desconto" name="desconto" value="{{ parceiro[0][10] }}">
         </div>
     </div>
 
     <div class="form-group">
-        <label for="endereco">Endereço:</label>
-        <input type="text" class="form-control" id="endereco" name="endereco" value="{{ parceiro[0][3] }}">
+        <label for="ta-detalhes">Detalhes:</label>
+        <textarea name="detalhes" class="form-control" id="ta-detalhes" rows="5"
+            cols="50">{{ parceiro[0][11] }}</textarea>
     </div>
-
-    <div class="form-group">
-        <label for="complemento">Complemento:</label>
-        <input type="text" class="form-control" id="complemento" name="complemento" value="{{ parceiro[0][4] }}">
-    </div>
-
-    <div class="form-group">
-        <label for="bairro">Bairro:</label>
-        <input type="text" class="form-control" id="bairro" name="bairro" value="{{ parceiro[0][5] }}">
-    </div>
-
-    <div class="form-group">
-        <label for="cidade">Cidade:</label>
-        <input type="text" class="form-control" id="cidade" name="cidade" value="{{ parceiro[0][6] }}">
-    </div>
-
-    <div class="form-group">
-        <label for="estado">Estado:</label>
-        <input type="text" class="form-control" id="estado" name="estado" value="{{ parceiro[0][7] }}">
-    </div>
-
-    <div class="form-group">
-        <label for="contato">Contato:</label>
-        <input type="text" class="form-control" id="contato" name="contato" value="{{ parceiro[0][8] }}">
-    </div>
-
-    <div class="form-group">
-        <label for="responsavel">Responsável:</label>
-        <input type="text" class="form-control" id="responsavel" name="responsavel" value="{{ parceiro[0][9] }}">
-    </div>
-
-    <div class="form-group">
-        <label for="desconto">Desconto:</label>
-        <input type="text" class="form-control" id="desconto" name="desconto" value="{{ parceiro[0][10] }}">
-    </div>
-
-    <div class="form-group">
-        <legend class="col-form-label col-sm-2 pt-0">Status:</legend>
-
-        <input class="custom-control-label" type="radio" id="ra-ativo" name="status" value="1" {% if
-            parceiro[0][13]=='1' %} checked {% endif %}>
-        <label class="form-check-label" for="ra-ativo">Ativo</label>
-
-        <input class="custom-control-label" type="radio" id="ra-inativo" name="status" value="0" {% if
-            parceiro[0][13]=='0' %} checked {% endif %}>
-        <label class="form-check-label" for="ra-inativo">Inativo</label>
-    </div>
-
-    <div class="form-group">
-        <label for="data">Data:</label>
-        <input type="date" class="form-control" id="data" name="data" value="{{ parceiro[0][12] }}" readonly>
-    </div>
-
-    <div class="form-group">
-        <label for="detalhes">Detalhes:</label>
-        <textarea class="form-control" name="detalhes" id="detalhes" rows="5" cols="50">{{ parceiro[0][11] }}</textarea>
-    </div><br>
 
     <button type="submit" class="btn btn-warning">Salvar</button>
     <button type="button" class="btn btn-secondary" onclick="window.location.href = '/';">Cancelar</button>
-
 </form>
 
 {% endblock conteudo %}

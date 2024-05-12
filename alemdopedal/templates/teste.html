@@ -1,109 +1,69 @@
 {% extends 'base.html' %}
+
 {% block conteudo %}
-<h1 class="display-2">CADASTRO DE PARCEIRO</h1>
-<form action="cadastrar_parceiro" method="POST">
 
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="parceiro">Parceiro:</label>
-            <input type="text" class="form-control" id="parceiro" name="parceiro">
-        </div>
+<h1 class="display-2">PARCEIROS</h1>
 
+<form action="{{ url_for('filtro_parceiro') }}" method="GET">
 
-        <fieldset class="form-group col-md-4">
-            <div class="form-group col-md-4">
-                <legend class="col-form-label col-sm-2 pt-0">Status:</legend>
-
-                <div class="form-row col-sm-10">
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="ra-ativo" value="1" checked>
-                        <label class="form-check-label" for="ra-ativo">
-                            Ativo
-                        </label>
-                    </div>
-
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="ra-inativo" value="2" checked>
-                        <label class="form-check-label" for="ra-inativo">
-                            Inativo
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-
-        <div class="form-group col-md-4 align-items-center d-flex">
-            <label class="mr-4" for="data">Data:</label>
-            <input type="date" class="form-control col-md-6" id="data" name="data">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Parceiro" aria-label="Parceiro"
+            aria-describedby="button-addon2" name="parceiro">
+        <div class="input-group-append">
+            <button class="btn btn-warning" type="submit" id="button-addon2">Buscar</button>
         </div>
     </div>
-
-    <div class="form-group">
-        <label for="endereco">Endereço</label>
-        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Rua dos ciclistas, nº 0">
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-8">
-            <label for="complemento">Complemento</label>
-            <input type="text" class="form-control" id="complemento" name="complemento"
-                placeholder="Apartamento, hotel, casa, etc.">
-        </div>
-
-        <div class="form-group col-md-2">
-            <label for="cep">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep">
-        </div>
-
-        <div class="form-group col-md-2">
-            <label for="buscar">.</label>
-            <button type="button" class="form-control btn btn-warning" onclick="buscarCep()">Buscar</button>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="bairro">Bairro</label>
-            <input type="text" class="form-control" id="bairro" name="bairro">
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="cidade">Cidade</label>
-            <input type="text" class="form-control" id="cidade" name="cidade">
-        </div>
-        <div class="form-group col-md-4">
-            <label for="estado">Estado</label>
-            <input type="text" class="form-control" id="estado" name="estado">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="contato">Contato:</label>
-            <input type="text" class="form-control" id="contato" name="contato">
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="responsavel">Responsável:</label>
-            <input type="text" class="form-control" id="responsavel" name="responsavel">
-        </div>
-
-        <div class="form-group col-md-2">
-            <label for="desconto">Desconto:</label>
-            <input type="text" class="form-control" id="desconto" name="desconto">
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <label for="ta-detalhes">Detalhes:</label>
-        <textarea name="detalhes" class="form-control" id="ta-detalhes" rows="5" cols="50"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-warning">Cadastrar</button>
-    <button type="reset" class="btn btn-dark">Limpar</button>
-    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/';">Cancelar</button>
-
-
 </form>
+
+{% block content %}
+
+<div class="table-responsive-sm">
+    <table class="table table-sm table-hover">
+        <tr>
+            <th>Parceiro</th>
+            <th>CEP</th>
+            <th>Endereço</th>
+            <th>Complemento</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Contato</th>
+            <th>Responsável</th>
+            <th>Desconto</th>
+            <th>Detalhes</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+        {% for item in resultado %}
+        <tr>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>{{ item[7] }}</td>
+            <td>{{ item[8] }}</td>
+            <td>{{ item[9] }}</td>
+            <td>{{ item[10] }}</td>
+            <td>{{ item[11] }}</td>
+            <td>{{ item[12] }}</td>
+            <td>
+                {% if item[13] == '1' %}
+                Ativo
+                {% else %}
+                Inativo
+                {% endif %}
+            </td>
+            <td>
+                <a href='{{ url_for("editar_parceiro", id=item[0]) }}' class="btn btn-warning">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock content %}
 
 {% endblock conteudo %}

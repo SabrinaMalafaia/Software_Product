@@ -39,20 +39,15 @@ def parceiro():
 
 @app.route('/buscar_parceiro', methods=['GET'])
 def buscar_parceiro():
-    return render_template("parceiro_buscar.html")
+    resultado = Parceiro.listar_parceiro()
+    return render_template("parceiro_buscar.html", resultado=resultado)
 
 
-@app.route('/resultado_parceiro', methods=['GET'])
-def resultado_parceiro():
+@app.route('/filtro_parceiro', methods=['GET'])
+def filtro_parceiro():
     parceiro = request.args.get('parceiro')
     resultado = Parceiro.buscar_parceiro(parceiro)
     return render_template('parceiro_buscar.html', resultado=resultado)
-
-
-@app.route('/listar_parceiro', methods=['GET'])
-def listar_parceiro():
-    resultado = Parceiro.listar_parceiro()
-    return render_template("parceiro_listar.html", parceiros=resultado)
 
 
 @app.route('/cadastrar_parceiro', methods=['GET', 'POST'])
@@ -115,20 +110,15 @@ def grupo():
 
 @app.route('/buscar_grupo', methods=['GET'])
 def buscar_grupo():
-    return render_template("grupo_buscar.html")
-
-
-@app.route('/resultado_grupo', methods=['GET'])
-def resultado_grupo():
-    grupo = request.args.get('grupo')
-    resultado = Grupo.buscar_grupo(grupo)
+    resultado = Grupo.listar_grupo()
     return render_template('grupo_buscar.html', resultado=resultado)
 
 
-@app.route('/listar_grupo', methods=['GET'])
-def listar_grupo():
-    resultado = Grupo.listar_grupo()
-    return render_template('grupo_listar.html', grupos=resultado)
+@app.route('/filtro_grupo', methods=['GET'])
+def filtro_grupo():
+    grupo = request.args.get('grupo')
+    resultado = Grupo.buscar_grupo(grupo)
+    return render_template('grupo_buscar.html', resultado=resultado)
 
 
 @app.route('/cadastrar_grupo', methods=['GET', 'POST'])
@@ -217,7 +207,7 @@ def cadastrar_evento():
 
         novo_evento.cadastrar_evento()
 
-        return render_template("_index.html")
+        return redirect(url_for('home'))
 
     return render_template("evento_cadastrar.html")
 
