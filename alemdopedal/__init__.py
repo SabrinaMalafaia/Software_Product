@@ -14,5 +14,6 @@ app.config['MAIL_DEFAULT_SENDER'] = 'rpa.malafaia@gmail.com'
 # contato@alemdopedal.com
 
 mail = Mail(app)
+app.secret_key = 'your_secret_key'
 
 from alemdopedal import rotas

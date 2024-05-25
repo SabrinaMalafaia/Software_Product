@@ -1,6 +1,6 @@
 # para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;
 from alemdopedal import app
-from flask import render_template, request, redirect, jsonify, url_for
+from flask import render_template, request, redirect, jsonify, url_for, session
 from alemdopedal.dados import Conexao
 from alemdopedal.parceiro import Parceiro
 from alemdopedal.grupo import Grupo
@@ -9,8 +9,8 @@ from alemdopedal.contato import enviar_email_contato
 import requests
 
 # DEPÓSITO DE DADOS ##############
-db = Conexao("bd", "3306", "root", "root", "V2")
-# db = Conexao("localhost", "3307", "root", "root", "V2")
+# db = Conexao("bd", "3306", "root", "root", "V2")
+db = Conexao("localhost", "3307", "root", "root", "V2")
 
 
 # INDEX ##############
@@ -268,10 +268,49 @@ def buscar_cep():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # Lógica de verificação de login
-        return 'Login bem-sucedido!'
+        loginEmail = request.form.get('loginEmail')
+        loginSenha = request.form.get('loginSenha')
+
+        db.conectar()
+
+        query = "SELECT * FROM usuarios WHERE email = %s AND senha = %s"
+        resposta = db.executar(query, (loginEmail, loginSenha))
+        print(resposta)
+
+        if resposta:
+            user = resposta[0]
+            session['email'] = user[1]
+            return redirect(url_for('perfil'))
+        else:
+            return 'E-mail ou senha inválida!'
+
+    return render_template('login.html')
+
+
+@app.route('/perfil')
+def perfil():
+    if 'email' in session:
+        loginEmail = session['email']
+
+        db.conectar()
+
+        query = "SELECT * FROM usuarios WHERE email = %s"
+        resposta = db.executar(query, (loginEmail,))
+
+        if resposta:
+            user = resposta[0][3]
+            print(user)
+            return render_template('perfil.html', user=user)
+        else:
+            return 'Usuário não encontrado'
     else:
-        return render_template('login.html')
+        return redirect(url_for('login'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    return redirect(url_for('home'))
 
 
 # ERRO ##############
