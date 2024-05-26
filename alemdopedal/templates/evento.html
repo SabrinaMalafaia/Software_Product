@@ -4,7 +4,7 @@
 
 <h1 class="display-2">EVENTOS</h1>
 
-<form method="GET" action="{{ url_for('filtrar_eventos') }}">
+<form action="{{ url_for('filtrar_eventos') }}" method="GET">
     <div class="input-group">
         <select class="custom-select" id="estado" name="estado">
             <option value="ALL" selected>Todos</option>

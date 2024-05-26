@@ -1,0 +1,127 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 filter-sidebar">
+            <form action="{{ url_for('filtrar_eventos') }}" method="GET">
+                <div class="form-group">
+                    <label for="estado">Estados:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="todos" name="estado" value="ALL" checked>
+                        <label class="form-check-label" for="todos">Todos</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="AC" name="estado" value="AC">
+                        <label class="form-check-label" for="AC">Acre</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="AL" name="estado" value="AL">
+                        <label class="form-check-label" for="AL">Alagoas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="AP" name="estado" value="AP">
+                        <label class="form-check-label" for="AP">Amapá</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="AM" name="estado" value="AM">
+                        <label class="form-check-label" for="AM">Amazonas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="BA" name="estado" value="BA">
+                        <label class="form-check-label" for="BA">Bahia</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="CE" name="estado" value="CE">
+                        <label class="form-check-label" for="CE">Ceará</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="DF" name="estado" value="DF">
+                        <label class="form-check-label" for="DF">Distrito Federal</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ES" name="estado" value="ES">
+                        <label class="form-check-label" for="ES">Espírito Santo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="GO" name="estado" value="GO">
+                        <label class="form-check-label" for="GO">Goiás</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="MA" name="estado" value="MA">
+                        <label class="form-check-label" for="MA">Maranhão</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="MT" name="estado" value="MT">
+                        <label class="form-check-label" for="MT">Mato Grosso</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="MS" name="estado" value="MS">
+                        <label class="form-check-label" for="MS">Mato Grosso do Sul</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="MG" name="estado" value="MG">
+                        <label class="form-check-label" for="MG">Minas Gerais</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="PA" name="estado" value="PA">
+                        <label class="form-check-label" for="PA">Pará</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="PB" name="estado" value="PB">
+                        <label class="form-check-label" for="PB">Paraíba</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="PR" name="estado" value="PR">
+                        <label class="form-check-label" for="PR">Paraná</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="PE" name="estado" value="PE">
+                        <label class="form-check-label" for="PE">Pernambuco</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="PI" name="estado" value="PI">
+                        <label class="form-check-label" for="PI">Piauí</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="RJ" name="estado" value="RJ">
+                        <label class="form-check-label" for="RJ">Rio de Janeiro</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="RN" name="estado" value="RN">
+                        <label class="form-check-label" for="RN">Rio Grande do Norte</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="RS" name="estado" value="RS">
+                        <label class="form-check-label" for="RS">Rio Grande do Sul</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="RO" name="estado" value="RO">
+                        <label class="form-check-label" for="RO">Rondônia</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="RR" name="estado" value="RR">
+                        <label class="form-check-label" for="RR">Roraima</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="SC" name="estado" value="SC">
+                        <label class="form-check-label" for="SC">Santa Catarina</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="SP" name="estado" value="SP">
+                        <label class="form-check-label" for="SP">São Paulo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="SE" name="estado" value="SE">
+                        <label class="form-check-label" for="SE">Sergipe</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="TO" name="estado" value="TO">
+                        <label class="form-check-label" for="TO">Tocantins</label>
+                    </div>
+                </div>
+                <button class="btn btn-warning" type="submit">Filtrar</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <!-- Conteúdo principal da página -->
+        </div>
+    </div>
+</div>

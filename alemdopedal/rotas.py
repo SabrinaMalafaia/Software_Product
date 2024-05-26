@@ -48,7 +48,11 @@ def buscar_parceiro():
 def filtro_parceiro():
     parceiro = request.args.get('parceiro')
     resultado = Parceiro.buscar_parceiro(parceiro)
-    return render_template('parceiro_buscar.html', resultado=resultado)
+    if resultado:
+        return render_template('parceiro_buscar.html', resultado=resultado)
+    else:
+        flash('Não há!', 'warning')
+        return render_template('parceiro_buscar.html', resultado=resultado)
 
 
 @app.route('/cadastrar_parceiro', methods=['GET', 'POST'])
@@ -70,7 +74,8 @@ def cadastrar_parceiro():
             request.form['detalhes']
         )
         Parceiro.adicionar_parceiro(parceiro)
-        return redirect(url_for('home'))
+        flash('Parceiro cadastrado com sucesso!', 'success')
+        return redirect(url_for('cadastrar_parceiro'))
     return render_template("parceiro_cadastrar.html")
 
 
@@ -119,7 +124,11 @@ def buscar_grupo():
 def filtro_grupo():
     grupo = request.args.get('grupo')
     resultado = Grupo.buscar_grupo(grupo)
-    return render_template('grupo_buscar.html', resultado=resultado)
+    if resultado:
+        return render_template('grupo_buscar.html', resultado=resultado)
+    else:
+        flash('Não há!', 'warning')
+        return render_template('grupo_buscar.html', resultado=resultado)
 
 
 @app.route('/cadastrar_grupo', methods=['GET', 'POST'])
@@ -140,7 +149,8 @@ def cadastrar_grupo():
             request.form['detalhes']
         )
         Grupo.adicionar_grupo(grupo)
-        return redirect(url_for('home'))
+        flash('Grupo cadastrado com sucesso!', 'success')
+        return redirect(url_for('cadastrar_grupo'))
     return render_template("grupo_cadastrar.html")
 
 
@@ -208,7 +218,9 @@ def cadastrar_evento():
 
         novo_evento.cadastrar_evento()
 
-        return redirect(url_for('home'))
+        flash('Evento criado com sucesso!', 'success')
+
+        return redirect(url_for('cadastrar_evento'))
 
     return render_template("evento_cadastrar.html")
 
@@ -251,7 +263,9 @@ def apagar_evento(id):
 def contato():
     if request.method == 'POST':
         enviar_email_contato()
-        return redirect(url_for('home'))
+        flash('Mensagem enviada com sucesso!', 'success')
+        return redirect(url_for('contato'))
+
     return render_template("contato.html")
 
 
@@ -339,7 +353,7 @@ def perfil():
 @app.route('/logout')
 def logout():
     session.pop('email', None)
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 
 # ERRO ##############
