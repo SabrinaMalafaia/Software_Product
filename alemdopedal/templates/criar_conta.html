@@ -2,31 +2,31 @@
 
 {% block conteudo %}
 
-<h2 class="display-2">CADASTRO DE USUÁRIO</h2>
-<form method="POST" action="{{ url_for('criar_conta') }}">
+<h2 class="display-2">CRIAR CONTA</h2>
+<form action="{{ url_for('criar_conta') }}" method="POST">
     <div class="form-group">
         <label for="username">Nome</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="Seu nome" required>
     </div>
+
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Seu email" required>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+            placeholder="Seu email" required>
+        <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
     </div>
+
+
     <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" id="password" name="password" aria-describedby="senhaHelp"
+            placeholder="Senha">
+        <small id="senhaHelp" class="form-text text-muted">Sua senha deve ter entre 8 e 20 caracteres, os quais
+            devem ser letras e números, sem espaços, caracteres especiais ou emojis.</small>
     </div>
+
     <button type="submit" class="btn btn-warning">Criar Conta</button>
+    <button type="reset" class="btn btn-dark">Limpar</button>
 </form>
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<br>
-<div class="alert alert-{{ category }}" role="alert">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
 
 {% endblock conteudo %}

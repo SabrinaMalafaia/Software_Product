@@ -9,7 +9,8 @@
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="parceiro">Parceiro:</label>
-            <input type="text" class="form-control" id="parceiro" name="parceiro">
+            <input type="text" class="form-control" id="parceiro" name="parceiro" placeholder="Nome do parceiro"
+                required>
         </div>
 
 
@@ -52,7 +53,7 @@
 
         <div class="form-group col-md-2">
             <label for="cep">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep">
+            <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000" required>
         </div>
 
         <div class="form-group col-md-2">
@@ -79,23 +80,25 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="contato">Contato:</label>
-            <input type="text" class="form-control" id="contato" name="contato">
+            <input type="text" class="form-control" id="contato" name="contato" placeholder="e-mail ou telefone"
+                required>
         </div>
 
         <div class="form-group col-md-4">
             <label for="responsavel">Responsável:</label>
-            <input type="text" class="form-control" id="responsavel" name="responsavel">
+            <input type="text" class="form-control" id="responsavel" name="responsavel"
+                placeholder="Nome do responsável da parceria" required>
         </div>
 
         <div class="form-group col-md-2">
             <label for="desconto">Desconto:</label>
-            <input type="text" class="form-control" id="desconto" name="desconto">
+            <input type="text" class="form-control" id="desconto" name="desconto" placeholder="Desconto" required>
         </div>
     </div>
 
     <div class="form-group">
         <label for="ta-detalhes">Detalhes:</label>
-        <textarea name="detalhes" class="form-control" id="ta-detalhes" rows="5" cols="50"></textarea>
+        <textarea name="detalhes" class="form-control" id="ta-detalhes" rows="5" cols="50" required></textarea>
     </div>
 
     <button type="submit" class="btn btn-warning">Cadastrar</button>

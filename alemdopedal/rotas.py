@@ -1,6 +1,7 @@
 # para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;
 from alemdopedal import app
 from flask import render_template, request, redirect, jsonify, url_for, flash, session
+from werkzeug.security import generate_password_hash, check_password_hash
 from alemdopedal.dados import Conexao
 from alemdopedal.parceiro import Parceiro
 from alemdopedal.grupo import Grupo
@@ -273,11 +274,15 @@ def criar_conta():
         password = request.form['password']
 
         if username and email and password:
+            senha_hash = generate_password_hash(password)
+
             db.conectar()
             db.executar("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)",
-                        (username, email, password))
+                        (username, email, senha_hash))
             db.desconectar()
+
             flash('Conta criada com sucesso!', 'success')
+
             return redirect(url_for('criar_conta'))
         else:
             flash('Todos os campos devem ser preenchidos!', 'danger')
@@ -293,16 +298,19 @@ def login():
 
         db.conectar()
 
-        query = "SELECT * FROM usuarios WHERE email = %s AND senha = %s"
-        resposta = db.executar(query, (loginEmail, loginSenha))
+        query = "SELECT * FROM usuarios WHERE email = %s"
+        resposta = db.executar(query, (loginEmail,))
 
         if resposta:
             user = resposta[0]
-            session['email'] = user[2]
-            return redirect(url_for('perfil'))
-        else:
-            db.desconectar()
-            flash('E-mail ou senha inválidos!', 'danger')
+            senha_hash = user[3]
+            if check_password_hash(senha_hash, loginSenha):
+                session['email'] = user[2]
+                db.desconectar()
+                return redirect(url_for('perfil'))
+
+        db.desconectar()
+        flash('E-mail ou senha inválidos!', 'danger')
 
     return render_template('login.html')
 
@@ -336,7 +344,7 @@ def logout():
 
 # ERRO ##############
 @app.errorhandler(404)
-def erro404(e):  # Erro
+def erro404(e):
     return render_template('erro.html'), 404
 
 

@@ -14,22 +14,11 @@
 
     <div class="form-group">
         <label for="loginSenha">Senha</label>
-        <input type="password" class="form-control" id="loginSenha" name="loginSenha" placeholder="Senha" required>
+        <input type="password" class="form-control" id="loginSenha" name="loginSenha" placeholder="Sua senha" required>
     </div>
 
     <button type="submit" class="btn btn-warning">Entrar</button>
     <button type="reset" class="btn btn-dark">Limpar</button>
 </form>
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<br>
-<div class="alert alert-{{ category }}" role="alert">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
 
 {% endblock conteudo %}
