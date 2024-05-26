@@ -1,6 +1,6 @@
 # para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;
 from alemdopedal import app
-from flask import render_template, request, redirect, jsonify, url_for, session
+from flask import render_template, request, redirect, jsonify, url_for, flash, session
 from alemdopedal.dados import Conexao
 from alemdopedal.parceiro import Parceiro
 from alemdopedal.grupo import Grupo
@@ -265,6 +265,26 @@ def buscar_cep():
 
 
 # LOGIN ##############
+@app.route('/criar_conta', methods=['GET', 'POST'])
+def criar_conta():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        if username and email and password:
+            db.conectar()
+            db.executar("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)",
+                        (username, email, password))
+            db.desconectar()
+            flash('Conta criada com sucesso!', 'success')
+            return redirect(url_for('criar_conta'))
+        else:
+            flash('Todos os campos devem ser preenchidos!', 'danger')
+
+    return render_template('criar_conta.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -275,14 +295,14 @@ def login():
 
         query = "SELECT * FROM usuarios WHERE email = %s AND senha = %s"
         resposta = db.executar(query, (loginEmail, loginSenha))
-        print(resposta)
 
         if resposta:
             user = resposta[0]
-            session['email'] = user[1]
+            session['email'] = user[2]
             return redirect(url_for('perfil'))
         else:
-            return 'E-mail ou senha inválida!'
+            db.desconectar()
+            flash('E-mail ou senha inválidos!', 'danger')
 
     return render_template('login.html')
 
@@ -298,11 +318,12 @@ def perfil():
         resposta = db.executar(query, (loginEmail,))
 
         if resposta:
-            user = resposta[0][3]
-            print(user)
+            user = resposta[0][1]
+            db.desconectar()
             return render_template('perfil.html', user=user)
         else:
-            return 'Usuário não encontrado'
+            db.desconectar()
+            flash('Usuário não encontrado!', 'danger')
     else:
         return redirect(url_for('login'))
 
