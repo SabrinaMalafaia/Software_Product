@@ -37,3 +37,11 @@ def enviar_email_contato():
         Equipe Além do Pedal
         '''
         alemdopedal.mail.send(msg_reply)
+
+
+def enviar_email_senha(destinatario, assunto, corpo):
+    msg = Message(subject=assunto,
+                  recipients=[destinatario],
+                  body=corpo)
+
+    alemdopedal.mail.send(msg)

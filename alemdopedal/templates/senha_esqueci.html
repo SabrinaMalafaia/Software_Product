@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<!--
+<input type="button" value="Voltar" onClick="history.go(-1)">
+-->
+
+<h3 class="display-2">ESQUECI SENHA</h3>
+
+<form method="post">
+    <div class="col-auto">
+        <label class="sr-only" for="email">Seu email</label>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
+            </div>
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                placeholder="Seu email" required>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">E-mail do cadastrado.</small>
+        <button type="submit" class="btn btn-warning mt-2">Enviar</button>
+    </div>
+</form>
+
+{% endblock conteudo %}

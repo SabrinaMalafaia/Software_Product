@@ -1,20 +1,26 @@
 # para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;
-from alemdopedal import app
+from alemdopedal import app, mail
 from flask import render_template, request, redirect, jsonify, url_for, flash, session
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from werkzeug.security import generate_password_hash, check_password_hash
 from alemdopedal.dados import Conexao
 from alemdopedal.parceiro import Parceiro
 from alemdopedal.grupo import Grupo
 from alemdopedal.evento import Evento
-from alemdopedal.contato import enviar_email_contato
+from alemdopedal.contato import enviar_email_contato, enviar_email_senha
 import requests
+import mysql.connector
 
 # DEPÓSITO DE DADOS ##############
 # db = Conexao("bd", "3306", "root", "root", "V2")
 db = Conexao("localhost", "3307", "root", "root", "V2")
 
+serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 # INDEX ##############
+
+
 @app.route('/', methods=['GET'])
 def home():
     return render_template("index.html")
@@ -291,13 +297,23 @@ def criar_conta():
             senha_hash = generate_password_hash(password)
 
             db.conectar()
-            db.executar("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)",
-                        (username, email, senha_hash))
-            db.desconectar()
 
-            flash('Conta criada com sucesso!', 'success')
+            resultado = db.executar(
+                "SELECT COUNT(*) FROM usuarios WHERE email = %s", (email,))
 
-            return redirect(url_for('criar_conta'))
+            if resultado[0][0] > 0:
+                flash('E-mail já cadastrado!', 'danger')
+            else:
+                try:
+                    resultado = db.executar("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)",
+                                            (username, email, senha_hash))
+
+                    db.desconectar()
+                    flash('Conta criada com sucesso!', 'success')
+                    return redirect(url_for('login'))
+
+                except mysql.connector.Error as erro:
+                    flash(f'Ocorreu um erro: {erro}', 'danger')
         else:
             flash('Todos os campos devem ser preenchidos!', 'danger')
 
@@ -354,6 +370,52 @@ def perfil():
 def logout():
     session.pop('email', None)
     return redirect(url_for('login'))
+
+
+# SENHA ##############
+@app.route('/esqueci_senha', methods=['GET', 'POST'])
+def esqueci_senha():
+    if request.method == 'POST':
+        email = request.form['email']
+        db.conectar()
+        user = db.executar('SELECT * FROM usuarios WHERE email = %s', (email,))
+        db.desconectar()
+        if user:
+            token = serializer.dumps(email, salt='recovery-salt')
+            link = url_for('redefinir_senha', token=token, _external=True)
+
+            enviar_email_senha(email, 'Redefinição de Senha',
+                               f'Clique no link para redefinir sua senha: {link}')
+            flash(
+                'Um e-mail foi enviado com instruções para redefinir sua senha.', 'success')
+        else:
+            flash('E-mail não encontrado.', 'warning')
+
+        return redirect(url_for('esqueci_senha'))
+
+    return render_template('senha_esqueci.html')
+
+
+@app.route('/redefinir_senha/<token>', methods=['GET', 'POST'])
+def redefinir_senha(token):
+    try:
+        email = serializer.loads(token, salt='recovery-salt', max_age=3600)
+    except SignatureExpired:
+        return '<h1>O link de redefinição de senha expirou</h1>'
+
+    if request.method == 'POST':
+        nova_senha = request.form['senha']
+        senha_hash = generate_password_hash(nova_senha)
+        db.conectar()
+        db.executar('UPDATE usuarios SET senha=%s WHERE email=%s',
+                    (senha_hash, email))
+        db.desconectar()
+
+        flash('Sua senha foi alterada com sucesso!', 'success')
+
+        return redirect(url_for('login'))
+
+    return render_template('senha_redefinir.html', token=token)
 
 
 # ERRO ##############

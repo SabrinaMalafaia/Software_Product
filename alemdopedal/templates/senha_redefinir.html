@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<!--
+<input type="button" value="Voltar" onClick="history.go(-1)">
+-->
+
+<h3 class="display-2">REDEFINIR SENHA</h3>
+
+<form method="post">
+    <div class="col-auto">
+        <label class="sr-only" for="senha">Nova Senha</label>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">*</div>
+            </div>
+            <input type="password" class="form-control" id="senha" name="senha" aria-describedby="senhaHelp"
+                placeholder="Nova Senha" required>
+        </div>
+        <small id="senhaHelp" class="form-text text-muted">Sua senha deve ter entre 8 e 20 caracteres, os quais
+            devem ser letras e números, sem espaços, caracteres especiais ou emojis.</small>
+        <button type="submit" class="btn btn-warning mt-2">Salvar</button>
+    </div>
+</form>
+
+{% endblock conteudo %}

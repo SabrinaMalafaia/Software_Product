@@ -45,7 +45,7 @@ class Conexao:
 
             except mysql.connector.Error as erro:
                 self.conexao.rollback()
-                return f"Erro ao executar a query: {erro}"
+                return f"Erro: {erro}"
 
             finally:
                 cursor.close()
