@@ -377,9 +377,11 @@ def logout():
 def esqueci_senha():
     if request.method == 'POST':
         email = request.form['email']
+
         db.conectar()
         user = db.executar('SELECT * FROM usuarios WHERE email = %s', (email,))
         db.desconectar()
+
         if user:
             token = serializer.dumps(email, salt='recovery-salt')
             link = url_for('redefinir_senha', token=token, _external=True)
@@ -387,7 +389,7 @@ def esqueci_senha():
             enviar_email_senha(email, 'Redefinição de Senha',
                                f'Clique no link para redefinir sua senha: {link}')
             flash(
-                'Um e-mail foi enviado com instruções para redefinir sua senha.', 'success')
+                'Um e-mail foi enviado com instruções para redefinir a sua senha.', 'success')
         else:
             flash('E-mail não encontrado.', 'warning')
 
@@ -401,7 +403,8 @@ def redefinir_senha(token):
     try:
         email = serializer.loads(token, salt='recovery-salt', max_age=3600)
     except SignatureExpired:
-        return '<h1>O link de redefinição de senha expirou</h1>'
+        flash('Link expirado!', 'warning')
+        return redirect(url_for('esqueci_senha'))
 
     if request.method == 'POST':
         nova_senha = request.form['senha']
