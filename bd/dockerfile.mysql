@@ -1,0 +1,10 @@
+# Usar uma imagem base do MySQL
+FROM mysql:8.0.34
+
+# Definir variáveis de ambiente para configuração do MySQL
+ENV MYSQL_USER=root
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=V2
+
+# Copiar o script SQL para o diretório de inicialização do MySQL
+COPY query.sql /docker-entrypoint-initdb.d/

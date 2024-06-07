@@ -1,16 +1,18 @@
 # para comentar o código no vscode é só selecionar o que quer comentar e prescionar ctrl+;
-from alemdopedal import app, mail
-from flask import render_template, request, redirect, jsonify, url_for, flash, session
+from app import app, mail
+import os
+from flask import render_template, request, redirect, jsonify, url_for, flash, session, current_app
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from werkzeug.security import generate_password_hash, check_password_hash
-from alemdopedal.dados import Conexao
-from alemdopedal.parceiro import Parceiro
-from alemdopedal.grupo import Grupo
-from alemdopedal.evento import Evento
-from alemdopedal.contato import enviar_email_contato, enviar_email_senha
+from app.dados import Conexao
+from app.parceiro import Parceiro
+from app.grupo import Grupo
+from app.evento import Evento
+from app.contato import enviar_email_contato, enviar_email_senha
 import requests
 import mysql.connector
+
 
 # DEPÓSITO DE DADOS ##############
 # db = Conexao("bd", "3306", "root", "root", "V2")
@@ -295,6 +297,7 @@ def criar_conta():
 
         if username and email and password:
             senha_hash = generate_password_hash(password)
+            foto_padrao = 'default.jpg'
 
             db.conectar()
 
@@ -305,10 +308,11 @@ def criar_conta():
                 flash('E-mail já cadastrado!', 'danger')
             else:
                 try:
-                    resultado = db.executar("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)",
-                                            (username, email, senha_hash))
+                    resultado = db.executar("INSERT INTO usuarios (nome, email, senha, foto_perfil) VALUES (%s, %s, %s, %s)",
+                                            (username, email, senha_hash, foto_padrao))
 
                     db.desconectar()
+
                     flash('Conta criada com sucesso!', 'success')
                     return redirect(url_for('login'))
 
@@ -356,12 +360,38 @@ def perfil():
         resposta = db.executar(query, (loginEmail,))
 
         if resposta:
-            user = resposta[0][1]
+            user = resposta[0]
             db.desconectar()
             return render_template('perfil.html', user=user)
         else:
             db.desconectar()
             flash('Usuário não encontrado!', 'danger')
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/mudar_foto', methods=['GET', 'POST'])
+def mudar_foto():
+    if 'email' in session:
+        loginEmail = session['email']
+
+        if 'foto_perfil' in request.files:
+            imagem = request.files['foto_perfil']
+            if imagem.filename != '':
+                caminho = os.path.join(
+                    current_app.root_path, 'static/perfil_fotos', imagem.filename)
+                imagem.save(caminho)
+
+                db.conectar()
+                query = "UPDATE usuarios SET foto_perfil = %s WHERE email = %s"
+                db.executar(query, (imagem.filename, loginEmail))
+                db.desconectar()
+
+                flash('Imagem de perfil atualizada com sucesso!', 'success')
+                return redirect(url_for('perfil'))
+
+        flash('Nenhuma imagem selecionada!', 'danger')
+        return redirect(url_for('perfil'))
     else:
         return redirect(url_for('login'))
 

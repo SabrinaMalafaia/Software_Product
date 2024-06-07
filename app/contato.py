@@ -1,6 +1,6 @@
 from flask import request
 from flask_mail import Message
-import alemdopedal
+import app
 
 
 def enviar_email_contato():
@@ -22,7 +22,7 @@ def enviar_email_contato():
         <p><strong>Assunto:</strong> {assunto}</p>
         <p><strong>Mensagem:</strong> {mensagem}</p>
         '''
-        alemdopedal.mail.send(msg)
+        app.mail.send(msg)
 
         # Envia e-mail de resposta para o remetente
         msg_reply = Message('Além do Pedal',
@@ -36,7 +36,7 @@ def enviar_email_contato():
         Atenciosamente,
         Equipe Além do Pedal
         '''
-        alemdopedal.mail.send(msg_reply)
+        app.mail.send(msg_reply)
 
 
 def enviar_email_senha(destinatario, assunto, corpo):
@@ -44,4 +44,4 @@ def enviar_email_senha(destinatario, assunto, corpo):
                   recipients=[destinatario],
                   body=corpo)
 
-    alemdopedal.mail.send(msg)
+    app.mail.send(msg)

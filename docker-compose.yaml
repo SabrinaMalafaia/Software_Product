@@ -1,14 +1,19 @@
 version: "2.24.5"
+
 services:
  bd:
+  container_name: mysql_alemdopedal
   build:
+    context: ./bd
     dockerfile: dockerfile.mysql
   ports:
-    - "3307:3306"
+    - "3306:3306"
   restart: always
 
- web:
+ app:
+  container_name: app_alemdopedal
   build:
+    context: ./app
     dockerfile: dockerfile.python
   working_dir: /data
   command: python main.py
@@ -19,3 +24,15 @@ services:
   ports:
     - "5050:5050"
   restart: always
+
+  # Opcional: Se você usar o Gunicorn como servidor WSGI
+  # gunicorn:
+  #   build:
+  #     context: ./app
+  #     dockerfile: dockerfile.python
+  #   container_name: app_gunicorn
+  #   command: gunicorn -b 0.0.0.0:5000 main:app
+  #   ports:
+  #     - "5000:5000"
+  #   depends_on:
+  #     - db

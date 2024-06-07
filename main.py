@@ -1,4 +1,4 @@
-from alemdopedal import app
+from app import app
 
 # RUN ##############
 if __name__ == '__main__':

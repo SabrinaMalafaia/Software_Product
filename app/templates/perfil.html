@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<div class="container">
+
+    <h2 class="display-2">Olá, {{ user[1] }}</h2>
+
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ url_for('static', filename='perfil_fotos/' + user[4]) }}" alt="Foto de perfil"
+            width="150">
+        <div class="card-body">
+
+            <form action="{{ url_for('mudar_foto') }}" method="post" enctype="multipart/form-data">
+
+                <div class="card-body">
+                    <input type="file" name="foto_perfil">
+                    <button type="submit">Mudar Foto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <a href="/logout">Logout</a>
+</div>
+
+{% endblock conteudo %}
